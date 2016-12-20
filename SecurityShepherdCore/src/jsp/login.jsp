@@ -64,7 +64,7 @@ if(ses.getAttribute("loginFailed") != null)
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>OWASP Security Shepherd - Login</title>
+	<title>CodePath Security Shepherd - Login</title>
 
 	<link href="css/theCss.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="css/theResponsiveCss.css" rel="stylesheet" type="text/css" media="screen">
@@ -75,7 +75,7 @@ if(ses.getAttribute("loginFailed") != null)
 	<jsp:include page="translation-select.jsp" />
 	<!-- start header -->
 	<div id="header">
-		<h1>Security Shepherd</h1>
+		<h1>CodePath Security Shepherd</h1>
 	</div>
 	<!-- end header -->
 	<!-- start page -->
