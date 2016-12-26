@@ -50,6 +50,11 @@
     		<fileset dir="${jsp.dir}"/>
     	</copy>
 	    
+	<mkdir dir="${build.dir}\WEB-INF\classes\i18n"/>
+	<copy todir="${build.dir}\WEB-INF\classes\i18n">
+    		<fileset dir="src/i18n"/>
+    	</copy>
+	    
     	<delete includeemptydirs="true">
     	    <fileset dir="${build.dir}" defaultexcludes="false">
     	       <include name="**/*svn*/**" />
