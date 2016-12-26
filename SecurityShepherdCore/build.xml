@@ -51,13 +51,14 @@
     	    </fileset>
     	</delete>
 
-	<jar jarfile="war/${projectName}.war" basedir="${build.dir}" />
     </target>
 
-
+	<target name="build.war" depends="webapp">
+		<jar jarfile="war/${projectName}.war" basedir="${build.dir}" />	
+	</target>
 
 	<target name="build.deploy.war" depends="webapp">
-
+		<jar jarfile="war/${projectName}.war" basedir="${build.dir}" />
 			<copy file="war/${projectName}.war" todir="${tomcat}"/>
 			<delete file="war/${projectName}.war"/>
 			<delete dir="${build.dir}" />
