@@ -45,7 +45,8 @@
     		<fileset dir="${jsp.dir}"/>
     	</copy>
 
-	<copy todir="${build.dir}\WEB-INF\classes">
+	<mkdir dir="${build.dir}\WEB-INF\classes\jsp"/>
+	<copy todir="${build.dir}\WEB-INF\classes\jsp">
     		<fileset dir="${jsp.dir}"/>
     	</copy>
 	    
