@@ -888,6 +888,11 @@ if (request.getSession() != null)
 				$("#theAdmiralList").hide("fast");
 				$("#thePrivateList").hide("fast");
 				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
 			});  
 			
 			$("#privateList").click(function () {
@@ -898,6 +903,11 @@ if (request.getSession() != null)
 				$("#theAdmiralList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
 			}); 
 			
 			$("#corporalList").click(function () {
@@ -908,6 +918,11 @@ if (request.getSession() != null)
 				$("#theAdmiralList").hide("fast");
 				$("#thePrivateList").hide("fast");
 				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
 			});  
 			
 			$("#sergeantList").click(function () {
@@ -918,6 +933,11 @@ if (request.getSession() != null)
 				$("#theAdmiralList").hide("fast");
 				$("#thePrivateList").hide("fast");
 				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
 			});  
 			
 			$("#lieutenantList").click(function () {
@@ -928,6 +948,11 @@ if (request.getSession() != null)
 				$("#theAdmiralList").hide("fast");
 				$("#thePrivateList").hide("fast");
 				$("#theMajorList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
 			}); 
 			
 			$("#majorList").click(function () {
@@ -938,6 +963,11 @@ if (request.getSession() != null)
 				$("#theAdmiralList").hide("fast");
 				$("#thePrivateList").hide("fast");
 				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
 			}); 
 			
 			$("#admiralList").click(function () {
@@ -948,7 +978,88 @@ if (request.getSession() != null)
 				$("#theMajorList").hide("fast");
 				$("#thePrivateList").hide("fast");
 				$("#theLieutenantList").hide("fast");
-			}); 	
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
+			});
+
+			$("#week8List").click(function () {
+			  $("#theWeek8List").toggle("slow");
+				$("#theAdmiralList").hide("fast");
+				$("#theFieldTrainingList").hide("fast");
+				$("#theCorporalList").hide("fast");
+				$("#theSergeantList").hide("fast");
+				$("#theMajorList").hide("fast");
+				$("#thePrivateList").hide("fast");
+				$("#theLieutenantList").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
+			});
+
+			$("#week9List").click(function () {
+				$("#theWeek9List").toggle("slow");
+				$("#theAdmiralList").hide("fast");
+				$("#theFieldTrainingList").hide("fast");
+				$("#theCorporalList").hide("fast");
+				$("#theSergeantList").hide("fast");
+				$("#theMajorList").hide("fast");
+				$("#thePrivateList").hide("fast");
+				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
+			});
+
+			$("#week10List").click(function () {
+				$("#theWeek10List").toggle("slow");
+				$("#theAdmiralList").hide("fast");
+				$("#theFieldTrainingList").hide("fast");
+				$("#theCorporalList").hide("fast");
+				$("#theSergeantList").hide("fast");
+				$("#theMajorList").hide("fast");
+				$("#thePrivateList").hide("fast");
+				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
+			});
+
+			$("#week11List").click(function () {
+				$("#theWeek11List").toggle("slow");
+				$("#theAdmiralList").hide("fast");
+				$("#theFieldTrainingList").hide("fast");
+				$("#theCorporalList").hide("fast");
+				$("#theSergeantList").hide("fast");
+				$("#theMajorList").hide("fast");
+				$("#thePrivateList").hide("fast");
+				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek12List").hide("fast");
+			});
+
+			$("#week12List").click(function () {
+				$("#theWeek12List").toggle("slow");
+				$("#theAdmiralList").hide("fast");
+				$("#theFieldTrainingList").hide("fast");
+				$("#theCorporalList").hide("fast");
+				$("#theSergeantList").hide("fast");
+				$("#theMajorList").hide("fast");
+				$("#thePrivateList").hide("fast");
+				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+			}); 
 		}
 		
 		<% if(ModulePlan.tornyFloor) { %>

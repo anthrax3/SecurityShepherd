@@ -55,7 +55,17 @@ public class Getter
 	
 	private static int majorCap = 175;
 	
-	private static int admiralCap = 999; //everything above Major is Admiral
+	private static int admiralCap = 200;
+	
+	private static int week8Cap = 220;
+	
+	private static int week9Cap = 240;
+	
+	private static int week10Cap = 260;
+	
+	private static int week11Cap = 280;
+	
+	private static int week12Cap = 1000;
 	
 	/**
 	 * This method hashes the user submitted password and sends it to the database.
@@ -1659,8 +1669,18 @@ public class Getter
 			return 6;
 		else if (rankNumber < admiralCap)
 			return 7;
+		else if (rankNumber < week8Cap)
+			return 8;
+		else if (rankNumber < week9Cap)
+			return 9;
+		else if (rankNumber < week10Cap)
+			return 10;
+		else if (rankNumber < week11Cap)
+			return 11;
+		else if (rankNumber < week12Cap)
+			return 12;
 		else
-			return 7; //Max level is 7.
+			return 12; //Max level is 12.
 	}
 	/**
 	 * This method prepares the Tournament module menu. This is when Security Shepherd is in "Tournament Mode".
@@ -1760,6 +1780,26 @@ public class Getter
 							//log.debug("Starting Admiral List");
 							levelMasterList += "<a id=\"admiralList\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.7") + "</div></a>"
 								+ "<ul id=\"theAdmiralList\" style=\"display: none;\" class='levelList'>\n";
+							break;
+						case 8: // Week 8
+							levelMasterList += "<a id=\"week8List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.8") + "</div></a>"
+								+ "<ul id=\"theWeek8List\" style=\"display: none;\" class='levelList'>\n";
+							break;
+						case 9: // Week 9
+							levelMasterList += "<a id=\"week9List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.9") + "</div></a>"
+								+ "<ul id=\"theWeek9List\" style=\"display: none;\" class='levelList'>\n";
+							break;
+						case 10: // Week 10
+							levelMasterList += "<a id=\"week10List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.10") + "</div></a>"
+								+ "<ul id=\"theWeek10List\" style=\"display: none;\" class='levelList'>\n";
+							break;
+						case 11: // Week 11
+							levelMasterList += "<a id=\"week11List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.11") + "</div></a>"
+								+ "<ul id=\"theWeek11List\" style=\"display: none;\" class='levelList'>\n";
+							break;
+						case 12: // Week 12
+							levelMasterList += "<a id=\"week12List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.12") + "</div></a>"
+								+ "<ul id=\"theWeek12List\" style=\"display: none;\" class='levelList'>\n";
 							break;
 					}
 				}
