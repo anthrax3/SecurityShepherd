@@ -6,19 +6,19 @@
  * This file assigns the tracking cookie for the exposed server
  * <br/><br/>
  * This file is part of the Security Shepherd Project.
- * 
+ *
  * The Security Shepherd project is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.<br/>
- * 
+ *
  * The Security Shepherd project is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.<br/>
- * 
+ *
  * You should have received a copy of the GNU General Public License
- * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>. 
+ * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Mark Denihan
  */
@@ -67,20 +67,24 @@
 </head>
 <body>
 	<script type="text/javascript" src="../js/jquery.js"></script>
-		<div id="contentDiv">		
+		<div id="contentDiv">
 			<% if(parameter.isEmpty()) { %>
 			<h2 class="title"><fmt:message key="readyToPlay.header.notReady" /></h2>
 			<p><fmt:message key="readyToPlay.text.info.notReady" /></p>
 			<% } else { %>
 			<h2 class="title"><fmt:message key="readyToPlay.title.enteredGame" /></h2>
-			<p> <fmt:message key="readyToPlay.text.info.enteredGame" /> </p>
+			<p> For most of the challenges, you will utilize the Burp Proxy to investigate and exploit
+          the vulnerability of each challenge. Download <a href="https://portswigger.net/burp/download.html">Burp Proxy
+          here</a>, the free version should be sufficient for this class.
+      </p>
+      <br />
 			<% } %>
 			<%= Analytics.sponsorshipMessage(new Locale(Validate.validateLanguage(request.getSession()))) %>
 			<% if(Analytics.googleAnalyticsOn) { %><%= Analytics.googleAnalyticsScript %><% } %>
 		</div>
 </body>
 </html>
-<% 
+<%
 	}
 	else
 	{
