@@ -144,7 +144,7 @@ DECLARE theDate DATETIME;
 COMMIT;
 SELECT NOW() FROM DUAL INTO theDate;
 SELECT userId, userName, userRole, badLoginCount, tempPassword, classId FROM `users`
-    WHERE userName = theName 
+    WHERE userName = theName
     AND userPass = SHA2(theHash, 512)
     AND suspendedUntil < theDate ;
 END
@@ -168,12 +168,12 @@ DECLARE theCount INT;
 COMMIT;
 SELECT NOW() FROM DUAL INTO theDate;
 -- Get the badLoginCount from users if they are not suspended already or account has attempted a login within the last 10 mins
-SELECT badLoginCount FROM `users` 
+SELECT badLoginCount FROM `users`
     WHERE userName = theName
     AND suspendedUntil < (theDate - '0000-00-00 00:10:00')
     INTO theCount;
-    
-SELECT suspendedUntil FROM `users` 
+
+SELECT suspendedUntil FROM `users`
     WHERE userName = theName
     AND suspendedUntil < (theDate - '0000-00-00 00:10:00')
     INTO untilDate;
@@ -192,9 +192,9 @@ IF (untilDate < theDate) THEN
             WHERE userName = theName
             AND suspendedUntil < (theDate - '0000-00-00 00:10:00')
             INTO theCount;
-            
+
         -- IF a user was counted then they are not suspended, but have attemped a bad login within 10 mins of their last
-        IF (theCount > 0) THEN 
+        IF (theCount > 0) THEN
             UPDATE `users` SET
                 badLoginCount = (badLoginCount + 1),
                 suspendedUntil = theDate
@@ -300,7 +300,7 @@ USE `core`$$
 CREATE PROCEDURE `core`.`userCreate` (IN theClassId VARCHAR(64), IN theUserName VARCHAR(32), IN theUserPass VARCHAR(512), IN theUserRole VARCHAR(32), IN theUserAddress VARCHAR(128), tempPass BOOLEAN)
 BEGIN
     DECLARE theId VARCHAR(64);
-    DECLARE theClassCount INT;    
+    DECLARE theClassCount INT;
     DECLARE theDate DATETIME;
 
     COMMIT;
@@ -315,7 +315,7 @@ BEGIN
                 SELECT null FROM DUAL INTO theClassId;
             END IF;
         END IF;
-                
+
         -- Increment sequence for users table
         UPDATE sequence SET
             currVal = currVal + 1
@@ -324,7 +324,7 @@ BEGIN
         SELECT SHA(CONCAT(currVal, tableName, theDate)) FROM sequence
             WHERE tableName = 'users'
             INTO theId;
-        
+
         -- Insert the values, badLoginCount and suspendedUntil Values will use the defaults defined by the table
         INSERT INTO users (
                 userId,
@@ -735,7 +735,7 @@ SELECT scoreBonus FROM modules
 IF (theBonus > 0) THEN
     SELECT (totalScore + theBonus) FROM DUAL
         INTO totalScore;
-    UPDATE modules SET 
+    UPDATE modules SET
         scoreBonus = scoreBonus - 1
         WHERE moduleId = theModuleId;
     COMMIT;
@@ -751,10 +751,10 @@ COMMIT;
 IF (medalInfo > 0) THEN
 	SELECT count(moduleId) FROM modules WHERE moduleId = theModuleId AND goldMedalAvailable = TRUE INTO goldMedalInfo;
 	IF (goldMedalInfo > 0) THEN
-		UPDATE users SET goldMedalCount = goldMedalCount + 1 WHERE userId = theUserId; 
+		UPDATE users SET goldMedalCount = goldMedalCount + 1 WHERE userId = theUserId;
 		UPDATE modules SET goldMedalAvailable = FALSE WHERE moduleId = theModuleId;
 		COMMIT;
-	ELSE	
+	ELSE
 		SELECT count(moduleId) FROM modules WHERE moduleId = theModuleId AND silverMedalAvailable = TRUE INTO silverMedalInfo;
 		IF (silverMedalInfo > 0) THEN
 			UPDATE users SET silverMedalCount = silverMedalCount + 1 WHERE userId = theUserId;
@@ -775,7 +775,7 @@ END IF;
 SELECT (totalScore + scoreValue) FROM modules
     WHERE moduleId = theModuleId
     INTO totalScore;
-    
+
 -- Update users score
 UPDATE users SET
     userScore = userScore + totalScore
@@ -823,7 +823,7 @@ SELECT COUNT(*) FROM results
     AND startTime IS NOT NULL
     INTO tempInt;
 IF(tempInt = 0) THEN
-    INSERT INTO results 
+    INSERT INTO results
         (moduleId, userId, startTime)
         VALUES
         (theModuleId, theUserId, theDate);
@@ -1008,7 +1008,7 @@ UPDATE users SET
 	userScore = userScore - userScore/10
 	WHERE userId = theUserId AND badSubmissionCount > 40 AND userScore > 5;
 COMMIT;
-UPDATE users SET 
+UPDATE users SET
 	userScore = userScore - 10
 	WHERE userId = theUserId AND badSubmissionCount > 40 AND userScore <= 5;
 COMMIT;
@@ -1073,11 +1073,11 @@ DECLARE theId VARCHAR(64);
         WHERE tableName = 'cheatSheet';
     COMMIT;
 	SELECT NOW() FROM DUAL INTO theDate;
-	
+
     SELECT SHA(CONCAT(currVal, tableName, theDate)) FROM `core`.`sequence`
         WHERE tableName = 'cheatSheet'
         INTO theId;
-    
+
     INSERT INTO `core`.`cheatsheet`
         (cheatSheetId, moduleId, createDate, solution)
         VALUES
@@ -1182,7 +1182,7 @@ USE `core`$$
 CREATE PROCEDURE `core`.`moduleFeedback` (IN theModuleId VARCHAR(64))
 BEGIN
 SELECT userName, TIMESTAMPDIFF(MINUTE, finishTime, startTime)*(-1), difficulty, knowledgeBefore, knowledgeAfter, resultSubmission
-	FROM modules 
+	FROM modules
 	LEFT JOIN results USING (moduleId)
   LEFT JOIN users USING (userId)
   WHERE moduleId = theModuleId;
@@ -1199,7 +1199,7 @@ USE `core`$$
 CREATE PROCEDURE `core`.`userProgress` (IN theClassId VARCHAR(64))
 BEGIN
     COMMIT;
-SELECT userName, count(finishTime), userScore FROM users JOIN results USING (userId) WHERE finishTime IS NOT NULL 
+SELECT userName, count(finishTime), userScore FROM users JOIN results USING (userId) WHERE finishTime IS NOT NULL
 AND classId = theClassId
 GROUP BY userName UNION SELECT userName, 0, userScore FROM users WHERE classId = theClassId AND userId NOT IN (SELECT userId FROM users JOIN results USING (userId) WHERE classId = theClassId AND finishTime IS NOT NULL GROUP BY userName) ORDER BY userScore DESC;
 END
@@ -1217,7 +1217,7 @@ USE `core`$$
 CREATE PROCEDURE `core`.`classScoreboard` (IN theClassId VARCHAR(64))
 BEGIN
     COMMIT;
-SELECT userId, userName, userScore, goldMedalCount, silverMedalCount, bronzeMedalCount FROM users 
+SELECT userId, userName, userScore, goldMedalCount, silverMedalCount, bronzeMedalCount FROM users
 	WHERE classId = theClassId AND userRole = 'player' AND userScore > 0
 	ORDER BY userScore DESC, goldMedalCount DESC, silverMedalCount DESC, bronzeMedalCount DESC, userId ASC;
 END
@@ -1235,7 +1235,7 @@ USE `core`$$
 CREATE PROCEDURE `core`.`totalScoreboard` ()
 BEGIN
     COMMIT;
-SELECT userId, userName, userScore, goldMedalCount, silverMedalCount, bronzeMedalCount FROM users 
+SELECT userId, userName, userScore, goldMedalCount, silverMedalCount, bronzeMedalCount FROM users
 	WHERE userRole = 'player' AND userScore > 0
 	ORDER BY userScore DESC, goldMedalCount DESC, silverMedalCount DESC, bronzeMedalCount DESC, userId ASC;
 END
@@ -1294,7 +1294,7 @@ DELIMITER $$
 USE `core`$$
 CREATE PROCEDURE `core`.`moduleOpenInfo` (IN theUserId VARCHAR(64))
 BEGIN
-(SELECT moduleName, moduleCategory, moduleId, finishTime FROM modules LEFT JOIN results USING (moduleId) 
+(SELECT moduleName, moduleCategory, moduleId, finishTime FROM modules LEFT JOIN results USING (moduleId)
 WHERE userId = theUserId AND moduleStatus = 'open') UNION (SELECT moduleName, moduleCategory, moduleId, null FROM modules WHERE moduleId NOT IN (SELECT moduleId FROM modules JOIN results USING (moduleId) WHERE userId = theUserId AND moduleStatus = 'open') AND moduleStatus = 'open') ORDER BY moduleCategory, moduleName;
 END
 
@@ -1324,7 +1324,7 @@ DELIMITER $$
 USE `core`$$
 CREATE PROCEDURE `core`.`moduleTournamentOpenInfo` (IN theUserId VARCHAR(64))
 BEGIN
-(SELECT moduleNameLangPointer, moduleCategory, moduleId, finishTime, incrementalRank, scoreValue FROM modules LEFT JOIN results USING (moduleId) 
+(SELECT moduleNameLangPointer, moduleCategory, moduleId, finishTime, incrementalRank, scoreValue FROM modules LEFT JOIN results USING (moduleId)
 WHERE userId = theUserId AND moduleStatus = 'open') UNION (SELECT moduleNameLangPointer, moduleCategory, moduleId, null, incrementalRank, scoreValue FROM modules WHERE moduleId NOT IN (SELECT moduleId FROM modules JOIN results USING (moduleId) WHERE userId = theUserId AND moduleStatus = 'open') AND moduleStatus = 'open') ORDER BY incrementalRank, scoreValue, moduleNameLangPointer;
 END
 
@@ -1385,10 +1385,12 @@ SELECT "Inserting Data for table `core`.`modules`" FROM DUAL;
 SET AUTOCOMMIT=0;
 USE `core`;
 
-INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('0dbea4cb5811fff0527184f99bd5034ca9286f11', 'Insecure Direct Object References', 'insecure.direct.object.references', 'lesson', 'Insecure Direct Object References', 'insecure.direct.object.references', '59e571b1e59441e76e0c85e5b49', 'fdb94122d0f032821019c7edf09dc62ea21e25ca619ed9107bcc50e4a8dbc100', 'open', '5', '10', '5', 0);
-INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('de626470273c01388629e5a56ac6f17e2eef957b', 'Insecure Direct Object Reference Bank', 'insecure.direct.object.reference.bank', 'challenge', 'Insecure Direct Object References', 'insecure.direct.object.references', '4a1df02af317270f844b56edc0c29a09f3dd39faad3e2a23393606769b2dfa35', '1f0935baec6ba69d79cfb2eba5fdfa6ac5d77fadee08585eb98b130ec524d00c', 'open', '5', '60', '5', 0);
+INSERT INTO modules (moduleId, moduleName, moduleNameLangPointer, moduleType, moduleCategory, moduleCategoryLangPointer, moduleResult, moduleHash, moduleStatus, incrementalRank, scoreValue, scoreBonus, hardcodedKey) VALUES ('c19b15850d08be132835b0fe6a749ca122078c9e', 'HTTP Headers', 'http.headers', 'challenge', 'Insecure Direct Object References', 'insecure.direct.object.references', '3cbd7aa8cb9fa9fb345609e3ab07785dc5d76669e7571a148508fb959643ad6e', '1cebf5680b31d9ce689797ec9e059aceeb4487db69cf007eff2bc22f1e8a809d', 'open', '0', '50', '5', 0);
+INSERT INTO modules (moduleId, moduleName, moduleNameLangPointer, moduleType, moduleCategory, moduleCategoryLangPointer, moduleResult, moduleHash, moduleStatus, incrementalRank, scoreValue, scoreBonus, hardcodedKey) VALUES ('78979835f9315d765393c185f5f27404d121192a', 'Basic Routes I', 'basic.routes.i', 'challenge', 'Insecure Direct Object References', 'insecure.direct.object.references', 'ee344de005ba578023fc0d43c798760d6b339ffff1855a9d61218bcd502df3f6', '179f382bc60b8d010a06eda3cf7676767f60ec5ad63ddeedfd967d4230e1d41c', 'open', '1', '50', '5', 0);
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('2dc909fd89c2b03059b1512e7b54ce5d1aaa4bb4', 'Insecure Direct Object Reference Challenge 1', 'insecure.direct.object.reference.challenge.1', 'challenge', 'Insecure Direct Object References', 'insecure.direct.object.references', 'dd6301b38b5ad9c54b85d07c087aebec89df8b8c769d4da084a55663e6186742', 'o9a450a64cc2a196f55878e2bd9a27a72daea0f17017253f87e7ebd98c71c98c', 'open', '5', '35', '5', 1);
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('82e8e9e2941a06852b90c97087309b067aeb2c4c', 'Insecure Direct Object Reference Challenge 2', 'insecure.direct.object.reference.challenge.2', 'challenge', 'Insecure Direct Object References', 'insecure.direct.object.references', '1f746b87a4e3628b90b1927de23f6077abdbbb64586d3ac9485625da21921a0f', 'vc9b78627df2c032ceaf7375df1d847e47ed7abac2a4ce4cb6086646e0f313a4', 'open', '5', '65', '5', 1);
+INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('0dbea4cb5811fff0527184f99bd5034ca9286f11', 'Insecure Direct Object References', 'insecure.direct.object.references', 'lesson', 'Insecure Direct Object References', 'insecure.direct.object.references', '59e571b1e59441e76e0c85e5b49', 'fdb94122d0f032821019c7edf09dc62ea21e25ca619ed9107bcc50e4a8dbc100', 'open', '2', '10', '5', 0);
+INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('de626470273c01388629e5a56ac6f17e2eef957b', 'Insecure Direct Object Reference Bank', 'insecure.direct.object.reference.bank', 'challenge', 'Insecure Direct Object References', 'insecure.direct.object.references', '4a1df02af317270f844b56edc0c29a09f3dd39faad3e2a23393606769b2dfa35', '1f0935baec6ba69d79cfb2eba5fdfa6ac5d77fadee08585eb98b130ec524d00c', 'open', '5', '60', '5', 0);
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('b9d82aa7b46ddaddb6acfe470452a8362136a31e', 'Poor Data Validation', 'poor.data.validation', 'lesson', 'Poor Data Validation', 'poor.data.validation', '6680b08b175c9f3d521764b41349fcbd3c0ad0a76655a10d42372ebccdfdb4bb', '4d8d50a458ca5f1f7e2506dd5557ae1f7da21282795d0ed86c55fefe41eb874f', 'open', '46', '10', '5', 0);
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('bf847c4a8153d487d6ec36f4fca9b77749597c64', 'Security Misconfiguration', 'security.misconfiguration', 'lesson', 'Security Misconfigurations', 'security.misconfigurations', '55b34717d014a5a355f6eced4386878fab0b2793e1d1dbfd23e6262cd510ea96', 'fe04648f43cdf2d523ecf1675f1ade2cde04a7a2e9a7f1a80dbb6dc9f717c833', 'open', '46', '10', '5', 0);
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('9533e21e285621a676bec58fc089065dec1f59f5', 'Broken Session Management', 'broken.session.management', 'lesson', 'Session Management', 'session.management', '6594dec9ff7c4e60d9f8945ca0d4', 'b8c19efd1a7cc64301f239f9b9a7a32410a0808138bbefc98986030f9ea83806', 'open', '46', '10', '5', 0);
@@ -1499,8 +1501,8 @@ INSERT INTO `core`.`cheatsheet` (`cheatSheetId`, `moduleId`, `createDate`, `solu
 CALL cheatSheetCreate('a84bbf8737a9ca749d81d5226fc87e0c828138ee', 'a84bbf8737a9ca749d81d5226fc87e0c828138ee.solution');
 CALL cheatSheetCreate('e0ba96bb4c8d4cd2e1ff0a10a0c82b5362edf998', 'e0ba96bb4c8d4cd2e1ff0a10a0c82b5362edf998.solution');
 CALL cheatSheetCreate('ad332a32a6af1f005f9c8d1e98db264eb2ae5dfe', 'ad332a32a6af1f005f9c8d1e98db264eb2ae5dfe.solution');
-CALL cheatSheetCreate('182f519ef2add981c77a584380f41875edc65a56', '182f519ef2add981c77a584380f41875edc65a56.solution'); 
-CALL cheatSheetCreate('fccf8e4d5372ee5a73af5f862dc810545d19b176', 'fccf8e4d5372ee5a73af5f862dc810545d19b176.solution'); 
+CALL cheatSheetCreate('182f519ef2add981c77a584380f41875edc65a56', '182f519ef2add981c77a584380f41875edc65a56.solution');
+CALL cheatSheetCreate('fccf8e4d5372ee5a73af5f862dc810545d19b176', 'fccf8e4d5372ee5a73af5f862dc810545d19b176.solution');
 CALL cheatSheetCreate('0a37cb9296ff3763f7f3a45ff313bce47afa9384', '0a37cb9296ff3763f7f3a45ff313bce47afa9384.solution');
 CALL cheatSheetCreate('04a5bd8656fdeceac26e21ef6b04b90eaafbd7d5', '04a5bd8656fdeceac26e21ef6b04b90eaafbd7d5.solution');
 CALL cheatSheetCreate('853c98bd070fe0d31f1ec8b4f2ada9d7fd1784c5', '853c98bd070fe0d31f1ec8b4f2ada9d7fd1784c5.solution');
@@ -1560,7 +1562,7 @@ call userCreate(null, 'admin', 'password', 'admin', 'admin@securityShepherd.org'
 SELECT "Creating BackUp Schema" FROM DUAL;
 
 DROP DATABASE IF EXISTS backup;
-CREATE DATABASE backup; 
+CREATE DATABASE backup;
 
 SET GLOBAL event_scheduler = ON;
 SET @@global.event_scheduler = ON;
