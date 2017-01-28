@@ -138,6 +138,14 @@ extends HttpServlet
 			return false;
 		}
 	}
+	// Query Params I
+	else if (levelHash.equals("d81c19c90b3786acdb7739e8106a7c9295949f0b0c5efd59e4c8595239c86387")) {
+		if (lowerAnswer.contains("xhpc_message")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	return false;
   }
