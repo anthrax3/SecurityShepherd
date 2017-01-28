@@ -1010,7 +1010,6 @@ if (request.getSession() != null)
 				$("#thePrivateList").hide("fast");
 				$("#theLieutenantList").hide("fast");
 				$("#theWeek8List").hide("fast");
-				$("#theWeek9List").hide("fast");
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
