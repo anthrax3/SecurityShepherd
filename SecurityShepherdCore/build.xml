@@ -92,6 +92,15 @@
 		  <arg line="-u root -e 'source coreSchema.sql' --force --password=${db.password}"/>
 		</exec>
 		<exec dir="database" executable="mysql">
+		  <arg line="-u root -e 'source coreContent.sql' --force --password=${db.password}"/>
+		</exec>
+		<exec dir="database" executable="mysql">
+		  <arg line="-u root -e 'source coreSchemaUpdates.sql' --force --password=${db.password}"/>
+		</exec>
+		<exec dir="database" executable="mysql">
+		  <arg line="-u root -e 'source coreContentUpdates.sql' --force --password=${db.password}"/>
+		</exec>
+		<exec dir="database" executable="mysql">
 		  <arg line="-u root -e 'source moduleSchemas.sql' --force --password=${db.password}"/>
 		</exec>
 	</target>
