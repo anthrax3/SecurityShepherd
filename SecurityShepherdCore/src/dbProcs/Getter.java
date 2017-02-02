@@ -1732,7 +1732,8 @@ public class Getter
 					+ "</a>\n";
 				listEntry += "</li>";
 				//What section does this belong in? Current or Next?
-				if (getTounnamentSectionFromRankNumber(levels.getInt(5)) > currentSection)
+				//if (getTounnamentSectionFromRankNumber(levels.getInt(5)) > currentSection)
+				if (levels.getInt(7) > currentSection)
 				{
 					//This level is not in the same level band as the previous level. So a new Level Band Header is required on the master list before we add the entry.
 					//Do we need to close a previous list?
@@ -1742,7 +1743,8 @@ public class Getter
 						levelMasterList += "</ul>\n";
 					}
 					//Update the current section to the one we have just added to the list
-					currentSection = getTounnamentSectionFromRankNumber(levels.getInt(5));
+					//currentSection = getTounnamentSectionFromRankNumber(levels.getInt(5));
+					currentSection = levels.getInt(7);
 					//Which to Add?
 					switch(currentSection)
 					{
