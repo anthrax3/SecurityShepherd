@@ -63,7 +63,9 @@ String translatedLevelName = bundle.getString("title.question.csrf");
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Security Shepherd - <%= translatedLevelName %></title>
 	<link href="../css/lessonCss/theCss.css" rel="stylesheet" type="text/css" media="screen" />
-	
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 	<script type="text/javascript" src="../js/jquery.js"></script>
@@ -97,7 +99,7 @@ String translatedLevelName = bundle.getString("title.question.csrf");
 				<%= bundle.getString("paragraph.info6") %>
 				<br/>
 				<br/>
-				GET <a href="<%= encoder.encodeForHTML("../root/grantComplete/csrfLesson?userId=exampleId") %>">/root/grantComplete/csrfLesson?userId=exampleId </a>
+        <pre><code>GET <a href="<%= encoder.encodeForHTML("../root/grantComplete/csrfLesson?userId=exampleId") %>">/root/grantComplete/csrfLesson?userId=exampleId </a></code></pre>
 				<br />
 				<%= bundle.getString("paragraph.info7") %>: <a><%= falseId %></a>
 				<br />
