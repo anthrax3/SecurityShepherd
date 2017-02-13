@@ -49,12 +49,12 @@
     	</copy>
 
 	<mkdir dir="${build.dir}\WEB-INF\classes\jsp"/>
-	<copy todir="${build.dir}\WEB-INF\classes\jsp">
+	<copy todir="${build.dir}\WEB-INF\classes\jsp"  overwrite="true">
     		<fileset dir="${jsp.dir}"/>
     	</copy>
 
 	<mkdir dir="${build.dir}\WEB-INF\classes\i18n"/>
-	<copy todir="${build.dir}\WEB-INF\classes\i18n">
+	<copy todir="${build.dir}\WEB-INF\classes\i18n" overwrite="true">
     		<fileset dir="src/i18n"/>
     	</copy>
 
