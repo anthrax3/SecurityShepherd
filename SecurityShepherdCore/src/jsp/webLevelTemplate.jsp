@@ -4,19 +4,19 @@
 /**
  * <br/><br/>
  * This file is part of the Security Shepherd Project.
- * 
+ *
  * The Security Shepherd project is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.<br/>
- * 
+ *
  * The Security Shepherd project is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.<br/>
- * 
+ *
  * You should have received a copy of the GNU General Public License
- * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>. 
+ * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Your Name
  */
@@ -57,12 +57,18 @@ if (request.getSession() != null)
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Security Shepherd - <%=i18nLevelName%></title>
 	<link href="../css/lessonCss/theCss.css" rel="stylesheet" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/clipboard-js/clipboard.min.js"></script>
+	<script type="text/javascript" src="../js/clipboard-js/tooltips.js"></script>
+	<script type="text/javascript" src="../js/clipboard-js/clipboard-events.js"></script>
 		<div id="contentDiv">
 			<h2 class="title"><%= i18nLevelName %></h2>
-			<p> 
+			<p>
 				<%= bundle.getString("paragraph.info.1") %>
 				<br/>
 				<br/>
@@ -74,7 +80,7 @@ if (request.getSession() != null)
 				<br />
 				<form id="leForm" action="javascript:;">
 					<table>
-					<tr><td>			
+					<tr><td>
 						<div id="submitButton">
 						<input type="submit" value="Get Info"/></div>
 						<p style="display: none;" id="loadingSign">Loading...</p>
@@ -82,7 +88,7 @@ if (request.getSession() != null)
 					</td></tr>
 					</table>
 				</form>
-				
+
 				<div id="resultsDiv"></div>
 				*/
 				%>
@@ -102,7 +108,7 @@ if (request.getSession() != null)
 						type: "POST",
 						url: "<ChangeThis= levelHash ChangeThis>",
 						data: {
-							variableName: theVariableName, 
+							variableName: theVariableName,
 							secondVariableName: theSecondVariableName
 						},
 						async: false
