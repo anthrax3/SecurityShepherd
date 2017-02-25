@@ -426,6 +426,15 @@
 	</servlet-mapping>
 
 	<servlet>
+	<servlet-name>/lessons/ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c</servlet-name>
+	<servlet-class>servlets.module.lesson.PgpLesson</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>/lessons/ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c</servlet-name>
+	<url-pattern>/lessons/ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>/lessons/zf8ed52591579339e590e0726c7b24009f3ac54cdff1b81a65db1688d86efb3a</servlet-name>
 		<servlet-class>servlets.module.lesson.XssLesson</servlet-class>
 	</servlet>
