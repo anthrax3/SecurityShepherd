@@ -13,9 +13,13 @@ UPDATE modules SET week = 4 WHERE moduleNameLangPointer = 'session.management.ch
 UPDATE modules SET week = 4 WHERE moduleNameLangPointer = 'cross.site.request.forgery';
 UPDATE modules SET week = 4 WHERE moduleNameLangPointer = 'csrf.1';
 UPDATE modules SET week = 4 WHERE moduleNameLangPointer = 'csrf.2';
--- fix ordering 
+-- fix ordering
 update modules set incrementalRank = 116 where moduleNameLangPointer = 'cross.site.request.forgery';
 update modules set incrementalRank = 117 where moduleNameLangPointer = 'csrf.1';
+
+UPDATE modules set week = 5 where moduleNameLangPointer LIKE 'insecure.cryptographic.storag%';
+UPDATE modules set week = 5 where moduleNameLangPointer LIKE 'pgp';
+update modules set incrementalRank = 135 where moduleNameLangPointer = 'pgp';
 
 UPDATE modules SET moduleStatus = 'closed' WHERE week is null;
 UPDATE modules SET moduleStatus = 'open' WHERE week is not null;
