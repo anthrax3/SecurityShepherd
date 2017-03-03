@@ -21,6 +21,10 @@ UPDATE modules set week = 5 where moduleNameLangPointer LIKE 'insecure.cryptogra
 UPDATE modules set week = 5 where moduleNameLangPointer LIKE 'pgp';
 update modules set incrementalRank = 135 where moduleNameLangPointer = 'pgp';
 
+UPDATE modules SET week = 6 WHERE moduleNameLangPointer in ('session.management.challenge.4','session.management.challenge.5','session.management.challenge.6','session.management.challenge.7','security.misconfiguration');
+
+UPDATE modules SET week = 6 WHERE moduleNameLangPointer LIKE 'password.hashing%';
+
 UPDATE modules SET moduleStatus = 'closed' WHERE week is null;
 UPDATE modules SET moduleStatus = 'open' WHERE week is not null;
 
