@@ -95,6 +95,17 @@ INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleT
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('853c98bd070fe0d31f1ec8b4f2ada9d7fd1784c5', 'CSRF 7', 'csrf.7', 'challenge', 'CSRF', 'csrf', '849e1efbb0c1e870d17d32a3e1b18a8836514619146521fbec6623fce67b73e8', '7d79ea2b2a82543d480a63e55ebb8fef3209c5d648b54d1276813cd072815df3', 'open', '235', '120', '5', 0);
 INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('0f4b2f64fd781993f3749f63b842e1ddae96e7c9', 'PGP', 'pgp', 'lesson', 'Crypto', 'crypto', 'eca1e27bd993e7808330f01df30cb754773c313ea851d17a00ee46d18580d859', 'ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c', 'open', '55', '30', '5', 1);
 
+INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('23038e6487d224e17a35b0cecc8803d0d467bd5f', 'Password Hashing 1', 'password.hashing.1', 'challenge', 'hashing', 'hashing', 'iloveyou!', 'f72c30f723cbd892e16cb1bcc64c0d345a10058f6bce3d81dd4ead9a4f9cd504', 'open', '210', '30', '5', 1);
+
+INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('4f1b659ffa2ecd0fcd47aa26053b26157b02ce06', 'Password Hashing 2', 'password.hashing.2', 'challenge', 'hashing', 'hashing', 'pandemonium', 'b9eff9ebfca5ee5ffedaf84948e3c23e4460011af90f6bcfab2dcd72749f4bce', 'open', '215', '30', '5', 1);
+
+INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('60c35b13298528ccd25608ced1073fda565a165d', 'Password Hashing 3', 'password.hashing.3', 'challenge', 'hashing', 'hashing', 'oleander', '55c63ee995979219d9f37ec8f2c1397b2d355f635687560161d2830939f69081', 'open', '220', '30', '5', 1);
+
+INSERT INTO modules (`moduleId`, `moduleName`, `moduleNameLangPointer`, `moduleType`, `moduleCategory`, `moduleCategoryLangPointer`, `moduleResult`, `moduleHash`, `moduleStatus`, `incrementalRank`, `scoreValue`, `scoreBonus`, `hardcodedKey`) VALUES ('2bea81d051c2569e19b55b5c5ecc5546fbb590dc', 'Password Hashing 4', 'password.hashing.4', 'challenge', 'hashing', 'hashing', '4158675309', 'f972a6828dce5296afc2cbd43562d3b4dcfa208a7586412dc7ca1f043aaf6e27', 'open', '225', '30', '5', 1);
+
+
+
+
 COMMIT;
 
 SELECT "Data for table cheatsheet" FROM DUAL;
