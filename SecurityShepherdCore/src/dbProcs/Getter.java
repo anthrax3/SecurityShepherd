@@ -1709,7 +1709,7 @@ public class Getter
 			log.debug("Gathering moduleTournamentOpenInfo ResultSet for user " + userId);
 			ResultSet levels = callstmt.executeQuery();
 			log.debug("Opening Result Set from moduleTournamentOpenInfo");
-			int currentSection = 0; // Used to identify the first row, as it is slightly different to all other rows for output
+			int currentSection = -1; // Used to identify the first row, as it is slightly different to all other rows for output
 			while(levels.next())
 			{
 				//Create Row Entry First
@@ -1737,7 +1737,7 @@ public class Getter
 				{
 					//This level is not in the same level band as the previous level. So a new Level Band Header is required on the master list before we add the entry.
 					//Do we need to close a previous list?
-					if(currentSection != 0) //If a Section Select hasn't been made before, we don't need to close any previous sections
+					if(currentSection != -1) //If a Section Select hasn't been made before, we don't need to close any previous sections
 					{
 						//We've had a section before, so need to close the previous one before we make this new one
 						levelMasterList += "</ul>\n";
