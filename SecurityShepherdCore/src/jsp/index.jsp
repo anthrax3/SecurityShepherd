@@ -6,23 +6,23 @@
 	Locale lang = new Locale(Validate.validateLanguage(request.getSession()));
 /**
  * This file is part of the Security Shepherd Project.
- * 
+ *
  * The Security Shepherd project is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.<br/>
- * 
+ *
  * The Security Shepherd project is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.<br/>
- * 
+ *
  * You should have received a copy of the GNU General Public License
- * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>. 
- * 
+ * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>.
+ *
  * @author Mark Denihan
  */
- 
+
 if (request.getSession() != null)
 {
 	HttpSession ses = request.getSession();
@@ -61,12 +61,12 @@ if (request.getSession() != null)
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title>OWASP Security Shepherd</title>
 
-		<!-- 
-			<fmt:message key="generic.text.commentMessage.1" /> 
-			<fmt:message key="generic.text.commentMessage.2" /> 
-			<fmt:message key="generic.text.commentMessage.3" /> 
+		<!--
+			<fmt:message key="generic.text.commentMessage.1" />
+			<fmt:message key="generic.text.commentMessage.2" />
+			<fmt:message key="generic.text.commentMessage.3" />
 			<fmt:message key="generic.text.commentMessage.4" />
-			
+
 			<fmt:message key="generic.text.shepherdVersion" />
 		-->
 
@@ -90,7 +90,7 @@ if (request.getSession() != null)
 				</p>
 			</div>
 		</div>
-		
+
 		<div id="page">
 			<div id="submitResult">
 				<form action="javascript:;" id="resultForm" >
@@ -107,9 +107,9 @@ if (request.getSession() != null)
 					<div id="solutionDiv" style="display:none;"></div>
 				<% } %>
 			</div>
-			<!-- <fmt:message key="generic.text.commentMessage.1" /> 
-			<fmt:message key="generic.text.commentMessage.2" /> 
-			<fmt:message key="generic.text.commentMessage.3" /> 
+			<!-- <fmt:message key="generic.text.commentMessage.1" />
+			<fmt:message key="generic.text.commentMessage.2" />
+			<fmt:message key="generic.text.commentMessage.3" />
 			<fmt:message key="generic.text.commentMessage.4" /> -->
 			<div id="contentDiv">
 				<!-- Ajax Div -->
@@ -173,7 +173,7 @@ if (request.getSession() != null)
 						<div id="cheatSheetButton" style="display: none;">
 							<a id="showSolution" href="javascript:;"><div class="menuButton"><fmt:message key="generic.text.cheat" /></div></a>
 						</div>
-						<% } %>					
+						<% } %>
 						<div id="levelListDiv">
 							<div id="sideMenuWrapper">
 							<% if(ModulePlan.isOpenFloor()) { %>
@@ -206,7 +206,7 @@ if (request.getSession() != null)
 						</div>
 						<div id="searchResults">
 							<!-- Results from module search go here -->
-						</div> 
+						</div>
 						<script>
 							function makeSearchList() {
 								//Make list for module search box
@@ -221,10 +221,10 @@ if (request.getSession() != null)
 									appendTo: "#searchResults"
 								});
 							}
-							
+
 							//Make Search List
 							makeSearchList();
-							
+
 							$("#searchModules").on("autocompleteselect", function( event, ui ) {
 								var toOpen = ui.item.value
 								console.log("Opening: " + toOpen);
@@ -238,21 +238,21 @@ if (request.getSession() != null)
 								});
 								console.log("Select Function Finish");
 							});
-							
+
 							$("#searchModules").on("autocompleteopen", function( event, ui ) {
 								console.log("Module Search Box Opened");
 								$('#theSidebarWrapper').removeClass('sidebarWrapper').addClass("sidebarWrapperAlwaysOpen");
 							});
-							
+
 							$("#searchModules").on("autocompleteclose", function( event, ui ) {
 								console.log("Module Search Box Closed");
 								$('#theSidebarWrapper').removeClass('sidebarWrapperAlwaysOpen').addClass("sidebarWrapper");
 							});
 						</script>
 					</ul>
-					<!-- <fmt:message key="generic.text.commentMessage.1" /> 
-					<fmt:message key="generic.text.commentMessage.2" /> 
-					<fmt:message key="generic.text.commentMessage.3" /> 
+					<!-- <fmt:message key="generic.text.commentMessage.1" />
+					<fmt:message key="generic.text.commentMessage.2" />
+					<fmt:message key="generic.text.commentMessage.3" />
 					<fmt:message key="generic.text.commentMessage.4" /> -->
 				</div> <!-- End of Sidebar -->
 			</div> <!-- End of Sidebar Wrapper -->
@@ -266,7 +266,7 @@ if (request.getSession() != null)
 		  }
 		});
 		</script>
-		
+
 		<% //Hide UI Scripts from Users (Blocked at session level anyway, just stops spiders finding the links)
 		if (userRole.compareTo("admin") == 0){ %>
 			<script src="js/adminToggle.js"></script>
@@ -282,7 +282,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -296,7 +296,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -310,7 +310,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -324,7 +324,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -338,7 +338,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -352,7 +352,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -366,7 +366,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -380,7 +380,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -394,7 +394,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -408,7 +408,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -422,7 +422,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -436,7 +436,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -451,7 +451,7 @@ if (request.getSession() != null)
 						  $("#contentDiv").show("fast");
 						});
 					});
-				});	
+				});
 			});
 
 			$("#registrationLink").click(function(){
@@ -464,7 +464,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -478,7 +478,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -492,7 +492,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -506,7 +506,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -520,7 +520,7 @@ if (request.getSession() != null)
 						  }
 						  $("#contentDiv").show("fast");
 						});
-					});	
+					});
 				});
 			});
 
@@ -535,9 +535,9 @@ if (request.getSession() != null)
 						  $("#contentDiv").show("fast");
 						});
 					});
-				});	
+				});
 			});
-			
+
 			$("#aboutShepherdLink").click(function(){
 				$("#submitResult").slideUp("fast", function(){
 					$("#contentDiv").hide("fast", function(){
@@ -549,9 +549,9 @@ if (request.getSession() != null)
 						  $("#contentDiv").show("fast");
 						});
 					});
-				});	
+				});
 			});
-			
+
 			$("#cheatSheetLink").click(function(){
 				$("#submitResult").slideUp("fast", function(){
 					$("#contentDiv").hide("fast", function(){
@@ -563,9 +563,9 @@ if (request.getSession() != null)
 						  $("#contentDiv").show("fast");
 						});
 					});
-				});	
+				});
 			});
-			
+
 			$("#levelLayoutLink").click(function(){
 				$("#submitResult").slideUp("fast", function(){
 					$("#contentDiv").hide("fast", function(){
@@ -577,15 +577,15 @@ if (request.getSession() != null)
 						  $("#contentDiv").show("fast");
 						});
 					});
-				});	
+				});
 			});
 			</script>
 		<% } %>
-		
+
 		<script>
 			function applyMenuButtonActionsOpenOrTourney(theCsrfToken, theErrorMessage){
 				console.log("Applying Menu Actions For Open/Tourney");
-				
+
 				$(".challenge").click(function(){
 					var whatFile = $(this).attr('id');
 					$("#currentModule").val(whatFile);
@@ -640,8 +640,8 @@ if (request.getSession() != null)
 							$("#contentDiv").slideDown("slow");
 						}
 					});
-				});	
-		
+				});
+
 				$(".lesson").click(function(){
 					var whatFile = $(this).attr('id');
 					$("#currentModule").val(whatFile);
@@ -698,27 +698,27 @@ if (request.getSession() != null)
 					});
 				});
 			}
-			
+
 			function applyMenuButtonActionsCtfMode(theCsrfToken, theErrorMessage){
 				console.log("Applying JS Functions to Incremental Menu Buttons");
-				
+
 				$("#completedList").click(function () {
 					$("#theCompletedList").toggle("slow");
 					$("#theUncompletedList").hide("fast");
 					$("#theAdminList").hide("fast");
 				});
-		
+
 				$("#uncompletedList").click(function () {
 					$("#theUncompletedList").toggle("slow");
 					$("#theCompletedList").hide("fast");
 					$("#theAdminList").hide("fast");
 				});
-		
+
 				$(".lesson").click(function(){
-					var whatFile = $(this).attr('id');	
-					$("#currentModule").val(whatFile);	
-					var theActualFile = "";	
-					$("#solutionDiv").hide("fast");	
+					var whatFile = $(this).attr('id');
+					$("#currentModule").val(whatFile);
+					var theActualFile = "";
+					$("#solutionDiv").hide("fast");
 					$("#contentDiv").slideUp("slow", function(){
 						var ajaxCall = $.ajax({
 							type: "POST",
@@ -731,14 +731,14 @@ if (request.getSession() != null)
 						});
 						if(ajaxCall.status == 200) {
 							theActualFile = ajaxCall.responseText;
-							$('#contentDiv').html("<iframe frameborder='no' class='levelIframe' id='theLesson' src='" + theActualFile + "'></iframe>");			
+							$('#contentDiv').html("<iframe frameborder='no' class='levelIframe' id='theLesson' src='" + theActualFile + "'></iframe>");
 							$("#theLesson").load(function(){
 								$("#submitResult").slideDown("fast", function(){
 									$("#contentDiv").slideDown("slow");
 								});
 							}).appendTo('#contentDiv');
-						} else {			
-							$('#contentDiv').html("<p> " + theErrorMessage + ": " + ajaxCall.status + " " + ajaxCall.statusText + "</p>");			
+						} else {
+							$('#contentDiv').html("<p> " + theErrorMessage + ": " + ajaxCall.status + " " + ajaxCall.statusText + "</p>");
 							$("#contentDiv").slideDown("slow");
 						}
 					});
@@ -819,7 +819,7 @@ if (request.getSession() != null)
 				console.log("No Key Submitted");
 			}
 		});
-		
+
 		<% if(showCheatSheet) { %>
 		$("#showSolution").click(function(){
 			$("#solutionDiv").hide("fast", function(){
@@ -845,7 +845,7 @@ if (request.getSession() != null)
 			});
 		});
 		<% } %>
-		
+
 		$(".successAlert").click(function(){
 			alert("successAlert click");
 			$(this).hide("slide", { direction: "left" }, 1000);
@@ -857,12 +857,12 @@ if (request.getSession() != null)
 
 		function openFloorToggleFunctions() {
 			console.log("Enabling Open Floor Toggle Funtions");
-			
+
 			$("#lessonList").click(function () {
 				$("#theLessonList").toggle("slow");
 				$("#theChallengeList").hide("fast");
 				$("#theAdminList").hide("fast");
-			});   
+			});
 
 			$("#challengeList").click(function () {
 				$("#theChallengeList").toggle("slow");
@@ -876,12 +876,29 @@ if (request.getSession() != null)
 			});
 		}
 		openFloorToggleFunctions();
-		
+
 		function tournamentToggleFunctions() {
 			console.log("Enablig Tournament Toggle Functions");
-			
+
+			$("#preworkList").click(function () {
+				$("#thePreworkList").toggle("slow");
+				$("#theFieldTrainingList").hide("fast");
+				$("#theCorporalList").hide("fast");
+				$("#theSergeantList").hide("fast");
+				$("#theMajorList").hide("fast");
+				$("#theAdmiralList").hide("fast");
+				$("#thePrivateList").hide("fast");
+				$("#theLieutenantList").hide("fast");
+				$("#theWeek8List").hide("fast");
+				$("#theWeek9List").hide("fast");
+				$("#theWeek10List").hide("fast");
+				$("#theWeek11List").hide("fast");
+				$("#theWeek12List").hide("fast");
+			});
+
 			$("#fieldTrainingList").click(function () {
 				$("#theFieldTrainingList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theCorporalList").hide("fast");
 				$("#theSergeantList").hide("fast");
 				$("#theMajorList").hide("fast");
@@ -893,10 +910,11 @@ if (request.getSession() != null)
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
-			});  
-			
+			});
+
 			$("#privateList").click(function () {
 				$("#thePrivateList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theCorporalList").hide("fast");
 				$("#theSergeantList").hide("fast");
 				$("#theMajorList").hide("fast");
@@ -908,10 +926,11 @@ if (request.getSession() != null)
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
-			}); 
-			
+			});
+
 			$("#corporalList").click(function () {
 				$("#theCorporalList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theSergeantList").hide("fast");
 				$("#theMajorList").hide("fast");
@@ -923,10 +942,11 @@ if (request.getSession() != null)
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
-			});  
-			
+			});
+
 			$("#sergeantList").click(function () {
 				$("#theSergeantList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
 				$("#theMajorList").hide("fast");
@@ -938,10 +958,11 @@ if (request.getSession() != null)
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
-			});  
-			
+			});
+
 			$("#lieutenantList").click(function () {
 				$("#theLieutenantList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
 				$("#theSergeantList").hide("fast");
@@ -953,10 +974,11 @@ if (request.getSession() != null)
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
-			}); 
-			
+			});
+
 			$("#majorList").click(function () {
 				$("#theMajorList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
 				$("#theSergeantList").hide("fast");
@@ -968,10 +990,11 @@ if (request.getSession() != null)
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
 				$("#theWeek12List").hide("fast");
-			}); 
-			
+			});
+
 			$("#admiralList").click(function () {
 				$("#theAdmiralList").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
 				$("#theSergeantList").hide("fast");
@@ -987,6 +1010,7 @@ if (request.getSession() != null)
 
 			$("#week8List").click(function () {
 			  $("#theWeek8List").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theAdmiralList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
@@ -1002,6 +1026,7 @@ if (request.getSession() != null)
 
 			$("#week9List").click(function () {
 				$("#theWeek9List").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theAdmiralList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
@@ -1017,6 +1042,7 @@ if (request.getSession() != null)
 
 			$("#week10List").click(function () {
 				$("#theWeek10List").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theAdmiralList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
@@ -1032,6 +1058,7 @@ if (request.getSession() != null)
 
 			$("#week11List").click(function () {
 				$("#theWeek11List").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theAdmiralList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
@@ -1047,6 +1074,7 @@ if (request.getSession() != null)
 
 			$("#week12List").click(function () {
 				$("#theWeek12List").toggle("slow");
+				$("#thePreworkList").hide("fast");
 				$("#theAdmiralList").hide("fast");
 				$("#theFieldTrainingList").hide("fast");
 				$("#theCorporalList").hide("fast");
@@ -1058,13 +1086,13 @@ if (request.getSession() != null)
 				$("#theWeek9List").hide("fast");
 				$("#theWeek10List").hide("fast");
 				$("#theWeek11List").hide("fast");
-			}); 
+			});
 		}
-		
+
 		<% if(ModulePlan.tornyFloor) { %>
 			tournamentToggleFunctions();
 		<% } %>
-		
+
 		function resizeSidebar() {
 			//Make Sidebar as Long as Page
 			if($("#contentDiv").height() > 700) {
@@ -1086,7 +1114,7 @@ if (request.getSession() != null)
 		            });
 		        });
 		    })(jQuery);
-			
+
 			function startScrollsBars(){
 				console.log("Initialising Custom Scrollbars Again (If Any)");
 				$(".levelList").mCustomScrollbar({
@@ -1095,9 +1123,9 @@ if (request.getSession() != null)
 	            });
 			}
 		</script>
-		<!-- <fmt:message key="generic.text.commentMessage.1" /> 
-		<fmt:message key="generic.text.commentMessage.2" /> 
-		<fmt:message key="generic.text.commentMessage.3" /> 
+		<!-- <fmt:message key="generic.text.commentMessage.1" />
+		<fmt:message key="generic.text.commentMessage.2" />
+		<fmt:message key="generic.text.commentMessage.3" />
 		<fmt:message key="generic.text.commentMessage.4" /> -->
 		<% if(Analytics.googleAnalyticsOn) { %><%= Analytics.googleAnalyticsScript %><% } %>
 		</body>
