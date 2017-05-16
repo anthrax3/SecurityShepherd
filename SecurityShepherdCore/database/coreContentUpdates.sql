@@ -1,6 +1,6 @@
-USE `core` ;
-
 -- This file contains updates to existing instance data
+
+USE `core` ;
 
 UPDATE modules SET week = 0 WHERE incrementalRank < 45;
 UPDATE modules SET week = 2 WHERE moduleNameLangPointer LIKE 'sql.injection%';
@@ -27,8 +27,5 @@ UPDATE modules SET week = 6 WHERE moduleNameLangPointer LIKE 'password.hashing%'
 
 UPDATE modules SET moduleStatus = 'closed' WHERE week is null;
 UPDATE modules SET moduleStatus = 'open' WHERE week is not null;
-
--- uncomment the following to enable all content
-UPDATE modules SET moduleStatus = 'closed' WHERE week >= 1;
 
 COMMIT;
