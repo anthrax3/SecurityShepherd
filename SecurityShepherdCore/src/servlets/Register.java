@@ -89,6 +89,10 @@ public class Register extends HttpServlet
 					log.debug("userAddress = " + userAddress);
 					String userAddressCnf = (String)request.getParameter("userAddressCnf");
 					log.debug("userAddressCnf = " + userAddressCnf);
+					String userClassId = (String) request.getParameter("classId");
+					log.debug("userClassId = " + userClassId);
+					
+					if (userClassId == null || userClassId.isEmpty()) userClassId = defaultClass == null ? new String() : defaultClass;
 					
 					//Validation
 					log.debug("Checking for nulls");
@@ -111,16 +115,17 @@ public class Register extends HttpServlet
 					{
 						//Data is good, Add user
 						//Any Class Set to Add them to?
-						if(defaultClass.isEmpty())
+						if(userClassId.isEmpty())
 						{
 							log.debug("Adding player to database, with null classId");
 							Setter.userCreate(ApplicationRoot, null, userName, passWord, "player", userAddress, false);
 						}
 						else //defaultClass is not empty, so It must be set to a class!
 						{
-							log.debug("Adding player to database, to class " + defaultClass);
-							Setter.userCreate(ApplicationRoot, defaultClass, userName, passWord, "player", userAddress, false);
+							log.debug("Adding player to database, to class " + userClassId);
+							Setter.userCreate(ApplicationRoot, userClassId, userName, passWord, "player", userAddress, false);
 						}
+						ses.setAttribute("registrationMessage", "Registration complete! Please sign in.");
 						response.sendRedirect("login.jsp");
 					}
 					else
