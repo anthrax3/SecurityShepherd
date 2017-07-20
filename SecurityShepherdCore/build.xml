@@ -16,59 +16,61 @@
 	<property environment="env"/>
 
 
-    <target name="clean">
-    	<delete file="${tomcat}/${projectName}.war"/>
-    	<delete dir="${tomcat}/${projectName}"/>
-    </target>
+	<target name="clean">
+		<delete file="war/${projectName}.war"/>
+		<delete dir="${build.dir}" />
+		<delete file="${tomcat}/${projectName}.war"/>
+		<delete dir="${tomcat}/${projectName}"/>
+	</target>
 
 	<path id="classpath">
-	  	<fileset dir="${lib.dir}" includes="**/*.jar"/>
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
 	</path>
 
-    <target name="compile">
-       	<javac debug="true" srcdir="src" destdir="bin"  classpathref="classpath"/>
-    </target>
+	<target name="compile">
+		<javac debug="true" srcdir="src" destdir="bin"  classpathref="classpath"/>
+	</target>
 
 
-    <target name="webapp" depends="clean, compile">
-    	<mkdir dir="${build.dir}"/>
-    	<mkdir dir="${build.dir}\WEB-INF"/>
-    	<mkdir dir="${build.dir}\WEB-INF\lib"/>
-    	<mkdir dir="${build.dir}\WEB-INF\classes"/>
+	<target name="webapp" depends="clean, compile">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}\WEB-INF"/>
+		<mkdir dir="${build.dir}\WEB-INF\lib"/>
+		<mkdir dir="${build.dir}\WEB-INF\classes"/>
 
-    	<copy todir="${build.dir}">
-    	    <fileset dir="site"/>
-    	</copy>
-    	<copy todir="${build.dir}\WEB-INF\lib">
-    	   	<fileset dir="${lib.dir}"/>
-    	</copy>
-    	<copy todir="${build.dir}\WEB-INF\classes">
-    	   	<fileset dir="bin"/>
-    	</copy>
-    	<copy todir="${build.dir}">
-    		<fileset dir="${jsp.dir}"/>
-    	</copy>
+		<copy todir="${build.dir}">
+			<fileset dir="site"/>
+		</copy>
+		<copy todir="${build.dir}\WEB-INF\lib">
+			<fileset dir="${lib.dir}"/>
+		</copy>
+		<copy todir="${build.dir}\WEB-INF\classes">
+			<fileset dir="bin"/>
+		</copy>
+		<copy todir="${build.dir}">
+			<fileset dir="${jsp.dir}"/>
+		</copy>
 
-	<mkdir dir="${build.dir}\WEB-INF\classes\jsp"/>
-	<copy todir="${build.dir}\WEB-INF\classes\jsp"  overwrite="true">
-    		<fileset dir="${jsp.dir}"/>
-    	</copy>
+		<mkdir dir="${build.dir}\WEB-INF\classes\jsp" />
+		<copy todir="${build.dir}\WEB-INF\classes\jsp" overwrite="true">
+			<fileset dir="${jsp.dir}"/>
+		</copy>
 
-	<mkdir dir="${build.dir}\WEB-INF\classes\i18n"/>
-	<copy todir="${build.dir}\WEB-INF\classes\i18n" overwrite="true">
-    		<fileset dir="src/i18n"/>
-    	</copy>
+		<mkdir dir="${build.dir}\WEB-INF\classes\i18n"/>
+		<copy todir="${build.dir}\WEB-INF\classes\i18n" overwrite="true">
+			<fileset dir="src/i18n"/>
+		</copy>
 
-			<replace file="${build.dir}/WEB-INF/coreDatabase.properties" token="CowSaysMoo" value="${db.password}"/>
-			<replace file="${build.dir}/WEB-INF/database.properties" token="localhost:3306" value="${db.url}"/>
+		<replace file="${build.dir}/WEB-INF/coreDatabase.properties" token="your-mysql-password" value="${db.password}"/>
+		<replace file="${build.dir}/WEB-INF/database.properties" token="localhost:3306" value="${db.url}"/>
 
-    	<delete includeemptydirs="true">
-    	    <fileset dir="${build.dir}" defaultexcludes="false">
-    	       <include name="**/*svn*/**" />
-    	    </fileset>
-    	</delete>
+		<delete includeemptydirs="true">
+			<fileset dir="${build.dir}" defaultexcludes="false">
+				<include name="**/*svn*/**" />
+			</fileset>
+		</delete>
 
-    </target>
+	</target>
 
 	<target name="build.war" depends="webapp">
 		<jar jarfile="war/${projectName}.war" basedir="${build.dir}" />
@@ -76,11 +78,9 @@
 
 	<target name="build.deploy.war" depends="webapp">
 		<jar jarfile="war/${projectName}.war" basedir="${build.dir}" />
-			<copy file="war/${projectName}.war" todir="${tomcat}"/>
-			<delete file="war/${projectName}.war"/>
-			<delete dir="${build.dir}" />
-	</target>
+		<copy file="war/${projectName}.war" todir="${tomcat}"/>
 
+	</target>
 
 	<target name="hudson.build" depends="GetBuildId, build.deploy.war" >
 
@@ -93,22 +93,19 @@
 
 	<target name="recreate.db">
 		<exec dir="database" executable="mysql">
-		  <arg line="-u root -e 'source coreSchema.sql' --force --password=${db.password}"/>
+			<arg line="-u root -e 'source coreSchema.sql' --force --password=${db.password}"/>
 		</exec>
 		<exec dir="database" executable="mysql">
-		  <arg line="-u root -e 'source coreContent.sql' --force --password=${db.password}"/>
+			<arg line="-u root -e 'source coreSchemaUpdates.sql' --force --password=${db.password}"/>
 		</exec>
 		<exec dir="database" executable="mysql">
-		  <arg line="-u root -e 'source coreSchemaUpdates.sql' --force --password=${db.password}"/>
+			<arg line="-u root -e 'source coreContent.sql' --force --password=${db.password}"/>
 		</exec>
 		<exec dir="database" executable="mysql">
-		  <arg line="-u root -e 'source coreContentUpdates.sql' --force --password=${db.password}"/>
+			<arg line="-u root -e 'source coreContentUpdates.sql' --force --password=${db.password}"/>
 		</exec>
 		<exec dir="database" executable="mysql">
-		  <arg line="-u root -e 'source coreContentUpdates.sql' --force --password=${db.password}"/>
-		</exec>
-		<exec dir="database" executable="mysql">
-		  <arg line="-u root -e 'source moduleSchemas.sql' --force --password=${db.password}"/>
+			<arg line="-u root -e 'source moduleSchemas.sql' --force --password=${db.password}"/>
 		</exec>
 	</target>
 

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -1704,19 +1705,21 @@ public class Getter
 
 			String listEntry = new String();
 			//Get the modules
-			CallableStatement callstmt = conn.prepareCall("call moduleTournamentOpenInfo(?)");
-			callstmt.setString(1, userId);
+			//CallableStatement callstmt = conn.prepareCall("call moduleTournamentOpenInfo(?)");
+			//callstmt.setString(1, userId);
 			log.debug("Gathering moduleTournamentOpenInfo ResultSet for user " + userId);
-			ResultSet levels = callstmt.executeQuery();
+			//ResultSet levels = callstmt.executeQuery();
 			log.debug("Opening Result Set from moduleTournamentOpenInfo");
+			List<Module> modules = Module.getModules(conn, userId);
 			int currentSection = -1; // Used to identify the first row, as it is slightly different to all other rows for output
-			while(levels.next())
+			//while(levels.next())
+			for (Module module : modules)
 			{
 				//Create Row Entry First
 				//log.debug("Adding " + lessons.getString(1));
 				listEntry = "<li>";
 				//Markers for completion
-				if(levels.getString(4) != null)
+				if(module.finishTime != null)
 				{
 					listEntry += "<img src='css/images/completed.png'/>";
 				}
@@ -1726,14 +1729,14 @@ public class Getter
 				}
 				//Prepare entry output
 				listEntry += "<a class='lesson' id='"
-					+ encoder.encodeForHTMLAttribute(levels.getString(3))
+					+ encoder.encodeForHTMLAttribute(module.moduleId)
 					+ "' href='javascript:;'>"
-					+ encoder.encodeForHTML(levelNames.getString(levels.getString(1)))
+					+ encoder.encodeForHTML(levelNames.getString(module.moduleNameLangPointer))
 					+ "</a>\n";
 				listEntry += "</li>";
 				//What section does this belong in? Current or Next?
 				//if (getTounnamentSectionFromRankNumber(levels.getInt(5)) > currentSection)
-				if (levels.getInt(7) > currentSection)
+				if (module.week > currentSection)
 				{
 					//This level is not in the same level band as the previous level. So a new Level Band Header is required on the master list before we add the entry.
 					//Do we need to close a previous list?
@@ -1744,7 +1747,7 @@ public class Getter
 					}
 					//Update the current section to the one we have just added to the list
 					//currentSection = getTounnamentSectionFromRankNumber(levels.getInt(5));
-					currentSection = levels.getInt(7);
+					currentSection = module.week;
 					//Which to Add?
 					switch(currentSection)
 					{
