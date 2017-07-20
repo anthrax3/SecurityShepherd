@@ -1,4 +1,4 @@
-package servlets.hashing;
+package servlets.module.challenge;
 
 import java.io.IOException;
 import java.io.PrintWriter;
