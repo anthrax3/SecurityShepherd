@@ -34,6 +34,7 @@ ENGINE = InnoDB;
 -- alteration of original stored proc to support returning week
 DROP PROCEDURE `core`.`moduleTournamentOpenInfo`;
 DROP PROCEDURE `core`.`classesGetData`;
+DROP PROCEDURE `core`.`classCreate`;
 
 DELIMITER $$
 
@@ -44,10 +45,24 @@ WHERE userId = theUserId) UNION (SELECT moduleNameLangPointer, moduleCategory, m
 END
 $$
 
+CREATE PROCEDURE `core`.`classCreate` (IN theClassName VARCHAR(32), IN theClassYear VARCHAR(5))
+BEGIN
+    DECLARE theId VARCHAR(64);
+    COMMIT;
+    UPDATE sequence SET
+        currVal = currVal + 1
+        WHERE tableName = 'users';
+    COMMIT;
+    SELECT SHA(CONCAT(currVal, tableName)) FROM sequence
+        WHERE tableName = 'users'
+        INTO theId;
+    INSERT INTO class VALUES (theId, theClassName, theClassYear, 0);
+END
+
+$$
+
 CREATE PROCEDURE `core`.`classesGetData` ()
 BEGIN
     SELECT classId, className, classYear FROM class ORDER BY ordering, className;
 END
 $$
-
-
