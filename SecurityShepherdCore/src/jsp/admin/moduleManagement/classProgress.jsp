@@ -77,7 +77,7 @@ catch(SQLException e)
 		<div class="entry">
 			<div id="badData"></div>
 			<form id="theForm" action="javascript:;">
-					<p>Select the class you would like to see the progress of</p>
+					<p>Select the class and week you would like to see the progress of</p>
 					<div id="badData"></div>
 					<input type="hidden" id="csrfToken" value="<%=csrfToken%>"/>
 					<table align="center">
@@ -124,7 +124,7 @@ catch(SQLException e)
 																	String weekId = encoder.encodeForHTMLAttribute(String.valueOf(weekList.getInt(1)));
 																	
 								%>
-												<option value="<%=weekId%>"><%=weekId%></option>
+												<option value="<%=weekId%>">Week <%=weekId%></option>
 											<%
 												}
 																			while(weekList.next());
