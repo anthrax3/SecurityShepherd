@@ -66,3 +66,17 @@ BEGIN
     SELECT classId, className, classYear FROM class ORDER BY ordering, className;
 END
 $$
+
+DELIMITER $$
+USE `core`$$
+CREATE PROCEDURE `core`.`userProgressWeekly` (IN theClassId VARCHAR(64), IN theWeek INT(11))
+BEGIN
+    COMMIT;
+SELECT userName, userAddress, count(finishTime) FROM users JOIN results USING (userId) WHERE finishTime IS NOT NULL
+AND classId = theClassId
+AND moduleId in (select moduleId from modules where week = theWeek)
+GROUP BY userName UNION SELECT userName, userAddress, 0 FROM users WHERE classId = theClassId AND userId NOT IN (SELECT userId FROM users JOIN results USING (userId) WHERE classId = theClassId AND finishTime IS NOT NULL GROUP BY userName) ORDER BY userName DESC;END
+
+$$
+
+DELIMITER ;

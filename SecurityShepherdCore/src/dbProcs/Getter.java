@@ -407,6 +407,31 @@ public class Getter
 
 	/**
 	 * @param ApplicationRoot The current running context of the application
+	 * @return Result set containing assigned week numbers, in order
+	 */
+	public static ResultSet getWeekInfo(String ApplicationRoot)
+	{
+		ResultSet result = null;
+		log.debug("*** Getter.getWeekInfo (All Classes) ***");
+		Connection conn = Database.getCoreConnection(ApplicationRoot);
+		try
+		{
+			PreparedStatement ps = conn.prepareStatement("select distinct week from modules where week is not null order by week asc");
+			log.debug("Gathering week numbers ResultSet");
+			result = ps.executeQuery();
+			log.debug("Returning Result Set from week numbers query");
+		}
+		catch (SQLException e)
+		{
+			log.error("Could not execute query: " + e.toString());
+			result = null;
+		}
+		log.debug("*** END getWeekInfo");
+		return result;
+	}	
+	
+	/**
+	 * @param ApplicationRoot The current running context of the application
 	 * @param classId The identifier of the class
 	 * @return String Array with Class information with the format of {name, year}
 	 */
@@ -1551,9 +1576,10 @@ public class Getter
 	 * Used to present the progress of a class in a series of loading bars
 	 * @param applicationRoot The current running context of the application
 	 * @param classId The identifier of the class to use in lookup
+	 * @param weekId The week ID to filter by
 	 * @return A HTML representation of a class's progress in the application
 	 */
-	public static String getProgress(String applicationRoot, String classId)
+	public static String getProgress(String applicationRoot, String classId, Integer weekId)
 	{
 		log.debug("*** Getter.getProgress ***");
 
@@ -1562,31 +1588,57 @@ public class Getter
 		Connection conn = Database.getCoreConnection(applicationRoot);
 		try
 		{
-			log.debug("Preparing userProgress call");
-			CallableStatement callstmnt = conn.prepareCall("call userProgress(?)");
-			callstmnt.setString(1, classId);
-			log.debug("Executing userProgress");
-			ResultSet resultSet = callstmnt.executeQuery();
-			int resultAmount = 0;
-			while(resultSet.next()) //For each user in a class
-			{
-				resultAmount++;
-				if(resultSet.getString(1) != null)
+			if (weekId == null) {
+				log.debug("Preparing userProgress call");
+				CallableStatement callstmnt = conn.prepareCall("call userProgress(?)");
+				callstmnt.setString(1, classId);
+				log.debug("Executing userProgress");
+				ResultSet resultSet = callstmnt.executeQuery();
+				int resultAmount = 0;
+				while(resultSet.next()) //For each user in a class
 				{
-					result += "<tr><td>" + encoder.encodeForHTML(resultSet.getString(1)) + //Output their progress
-						"</td><td><div style='background-color: #A878EF; heigth: 25px; width: " + widthOfUnitBar*resultSet.getInt(2) + "px;'>" +
-								"<font color='white'><strong>" +
-								resultSet.getInt(2);
-					if(resultSet.getInt(2) > 6)
-						result += " Modules";
-					result += "</strong></font></div></td></tr>";
+					resultAmount++;
+					if(resultSet.getString(1) != null)
+					{
+						result += "<tr><td>" + encoder.encodeForHTML(resultSet.getString(1)) + //Output their progress
+							"</td><td><div style='background-color: #A878EF; heigth: 25px; width: " + widthOfUnitBar*resultSet.getInt(2) + "px;'>" +
+									"<font color='white'><strong>" +
+									resultSet.getInt(2);
+						if(resultSet.getInt(2) > 6)
+							result += " Modules";
+						result += "</strong></font></div></td></tr>";
+					}
 				}
+				if(resultAmount > 0)
+					result = "<table><tr><th>Player</th><th>Progress</th></tr>" +
+							 result + "</table>";
+				else
+					result = new String();
+			} else {
+				log.debug("Preparing userProgressWeekly call");
+				CallableStatement callstmnt = conn.prepareCall("call userProgressWeekly(?,?)");
+				callstmnt.setString(1, classId);
+				callstmnt.setInt(2, weekId);
+				log.debug("Executing userProgressWeekly");
+				ResultSet resultSet = callstmnt.executeQuery();
+				int resultAmount = 0;
+				while(resultSet.next()) //For each user in a class
+				{
+					resultAmount++;
+					if(resultSet.getString(1) != null)
+					{
+						result += "<tr><td>" + encoder.encodeForHTML(resultSet.getString(1)) + "</td>" +
+							"<td>" + encoder.encodeForHTML(resultSet.getString(2)) + "</td>" +
+							"<td>" + resultSet.getString(3) + " Module(s)</td></tr>";
+					}
+				}
+				if(resultAmount > 0)
+					result = "<table><tr><th>Player</th><th>Email</th><th>Completed</th></tr>" +
+							 result + "</table>";
+				else
+					result = new String();
+				
 			}
-			if(resultAmount > 0)
-				result = "<table><tr><th>Player</th><th>Progress</th></tr>" +
-						 result + "</table>";
-			else
-				result = new String();
 		}
 		catch(SQLException e)
 		{
