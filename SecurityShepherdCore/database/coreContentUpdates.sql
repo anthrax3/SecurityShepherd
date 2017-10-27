@@ -28,5 +28,21 @@ UPDATE modules SET week = 6 WHERE moduleNameLangPointer LIKE 'password.hashing%'
 UPDATE modules SET moduleStatus = 'closed' WHERE week is null;
 UPDATE modules SET moduleStatus = 'open' WHERE week is not null;
 
+CALL classCreate('Cybersecurity University', '2017');
+CALL classCreate('Cybersecurity University TAs', '2017');
+CALL classCreate('Stanford University', '2017');
+CALL classCreate('IITD Workshop', '2017');
+
+update class set cohort = 121 where className = 'CyberSec' and classYear = '2017';
+
+INSERT INTO class_modules (classId, moduleId, moduleStatus, week)
+  SELECT
+    '0ed75302b767616b3a1d52adbee7e70dccb83dcf' as classId,
+    1 AS item_code,
+    2 AS invoice_code,
+    item_costprice
+  FROM qa_items
+  WHERE item_code = 1;
+
 
 COMMIT;

@@ -6,6 +6,9 @@ USE `core` ;
 ALTER TABLE modules ADD week INT;
 
 ALTER TABLE class ADD ordering INT;
+ALTER TABLE class ADD cohort INT;
+
+ALTER TABLE users ADD cohort_member_id INT;
 
 
 -- -----------------------------------------------------
@@ -56,10 +59,27 @@ BEGIN
     SELECT SHA(CONCAT(currVal, tableName)) FROM sequence
         WHERE tableName = 'users'
         INTO theId;
-    INSERT INTO class VALUES (theId, theClassName, theClassYear, 0);
+    INSERT INTO class VALUES (theId, theClassName, theClassYear, 0, null);
 END
 
 $$
+
+CREATE PROCEDURE `core`.`classCreateCohort` (IN theClassName VARCHAR(32), IN theClassYear VARCHAR(5), IN theCohortId INT(11))
+BEGIN
+    DECLARE theId VARCHAR(64);
+    COMMIT;
+    UPDATE sequence SET
+        currVal = currVal + 1
+        WHERE tableName = 'users';
+    COMMIT;
+    SELECT SHA(CONCAT(currVal, tableName)) FROM sequence
+        WHERE tableName = 'users'
+        INTO theId;
+    INSERT INTO class VALUES (theId, theClassName, theClassYear, 0, theCohortId);
+END
+
+$$
+
 
 CREATE PROCEDURE `core`.`classesGetData` ()
 BEGIN
@@ -76,6 +96,35 @@ SELECT userName, userAddress, count(finishTime) FROM users JOIN results USING (u
 AND classId = theClassId
 AND moduleId in (select moduleId from modules where week = theWeek)
 GROUP BY userName UNION SELECT userName, userAddress, 0 FROM users WHERE classId = theClassId AND userId NOT IN (SELECT userId FROM users JOIN results USING (userId) WHERE classId = theClassId AND finishTime IS NOT NULL GROUP BY userName) ORDER BY userName DESC;END
+
+$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+USE `core`$$
+CREATE PROCEDURE `core`.`userProgressByWeek` (IN theClassId VARCHAR(64))
+BEGIN
+    COMMIT;
+SELECT userName, userAddress, cohort_member_id, count(finishTime) as total_complete,
+count(if(week <= 1, finishTime, null)) as w1_complete,
+count(if(week = 2, finishTime, null)) as w2_complete,
+count(if(week = 3, finishTime, null)) as w3_complete,
+count(if(week = 4, finishTime, null)) as w4_complete,
+count(if(week = 5, finishTime, null)) as w5_complete,
+count(if(week = 6, finishTime, null)) as w6_complete
+FROM users
+LEFT JOIN results USING (userId)
+LEFT JOIN modules USING (moduleId)
+WHERE finishTime IS NOT NULL
+AND classId = theClassId
+GROUP BY userName UNION SELECT userName, userAddress, cohort_member_id, 0, 0, 0, 0, 0, 0, 0 FROM users WHERE classId = theClassId AND userId NOT IN (SELECT userId FROM users JOIN results USING (userId) WHERE classId = theClassId AND finishTime IS NOT NULL GROUP BY userName) ORDER BY total_complete DESC, userAddress
+INTO OUTFILE '/var/lib/mysql-files/progress.csv'
+FIELDS ENCLOSED BY '"'
+TERMINATED BY ','
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n';END
 
 $$
 
