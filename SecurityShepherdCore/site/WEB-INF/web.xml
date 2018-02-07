@@ -45,6 +45,14 @@
 		<url-pattern>/mobileLogin</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>/vulMobileAPI</servlet-name>
+		<servlet-class>servlets.VulMobileAPI</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>/vulMobileAPI</servlet-name>
+		<url-pattern>/vulMobileAPI</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>/register</servlet-name>
@@ -414,24 +422,6 @@
 	<servlet-mapping>
 		<servlet-name>/changeVulnerableAppRoot</servlet-name>
 		<url-pattern>/changeVulnerableAppRoot</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>/VerifyAnswer</servlet-name>
-		<servlet-class>servlets.module.VerifyAnswer</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>/VerifyAnswer</servlet-name>
-		<url-pattern>/VerifyAnswer</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-	<servlet-name>/lessons/ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c</servlet-name>
-	<servlet-class>servlets.module.lesson.PgpLesson</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	<servlet-name>/lessons/ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c</servlet-name>
-	<url-pattern>/lessons/ccc8655e9077c2cba42af98f0a828f2fbea20b7b7136b2a10c0f862c8d4d944c</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -1198,14 +1188,5 @@
 	<servlet-mapping>
 		<servlet-name>/challenges/7edcbc1418f11347167dabb69fcb54137960405da2f7a90a0684f86c4d45a2e7</servlet-name>
 		<url-pattern>/challenges/7edcbc1418f11347167dabb69fcb54137960405da2f7a90a0684f86c4d45a2e7</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>/challenges/f72c30f723cbd892e16cb1bcc64c0d345a10058f6bce3d81dd4ead9a4f9cd504</servlet-name>
-		<servlet-class>servlets.hashing.PasswordHashing1</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	<servlet-name>/challenges/f72c30f723cbd892e16cb1bcc64c0d345a10058f6bce3d81dd4ead9a4f9cd504</servlet-name>
-	<url-pattern>/challenges/f72c30f723cbd892e16cb1bcc64c0d345a10058f6bce3d81dd4ead9a4f9cd504</url-pattern>
 	</servlet-mapping>
 </web-app>

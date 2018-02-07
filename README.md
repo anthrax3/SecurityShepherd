@@ -1,6 +1,6 @@
 # OWASP Security Shepherd
 The [OWASP Security Shepherd Project](http://bit.ly/owaspSecurityShepherd) is a web and mobile application security training platform. Security Shepherd has been designed to foster and improve security awareness among a varied skill-set demographic. The aim of this project is to take AppSec novices or experienced engineers and sharpen their penetration testing skill set to security expert status.
-  
+
 # Where can I download Security Shepherd?
 
 ### Virtual Machine or Manual Setup
@@ -8,13 +8,14 @@ You can download Security Shepherd VM's or Manual Installation Packs from [GitHu
 
 ### Docker
 There is also a docker image available from [Dockerhub](https://hub.docker.com/r/ismisepaul/securityshepherd/) you can pull it down with  
-`docker pull ismisepaul/securityshepherd` 
+`docker pull ismisepaul/securityshepherd`
 
 Note: You'll need to get a shell on your docker container and run mysql and tomcat manually;  
-```BASH 
-docker run -i -p 80:80 -p 443:443 -t ismisepaul/securityshepherd /bin/bash
+```BASH
+docker run -i -p 80:80 -p 443:443 -p 27017:27017 -t ismisepaul/securityshepherd /bin/bash
 ```
-```BASH 
+```BASH
+/usr/bin/mongod &
 /usr/bin/mysqld_safe &
 service tomcat7 start
 ```  
@@ -31,7 +32,7 @@ chown tomcat7 /etc/authbind/byport/443
 
 # How do I setup Security Shepherd?
 We've got fully automated and step by step walkthroughs on our [wiki page](https://github.com/markdenihan/owaspSecurityShepherd/wiki) to help you get Security Shepherd up and running.
-  
+
 # What can Security Shepherd be used for?
 Security Shepherd can be used as a;
 * Teaching Tool for All Application Security
@@ -39,7 +40,7 @@ Security Shepherd can be used as a;
 * Mobile Application Pen Testing Training
 * Safe Playground to Practise AppSec Techniques
 * Platform to demonstrate real Security Risk examples
-  
+
 # Why choose Security Shepherd?
 There are a lot of purposefully vulnerable applications available in the OWASP Project Inventory, and even more across the internet. Why should you use Security Shepherd? Here are a few reasons;  
 * **Wide Topic Coverage**  
@@ -53,7 +54,7 @@ The security risks in Shepherd are real vulnerabilities that have had their expl
 * **Scalability**  
 Shepherd can be used locally by a single user or easily as a server for a high amount of users.
 * **Highly Customisable**  
-Shepherd enables admins to set what levels are available to their users and in what way they are presentended (Open, CTF and Tournament Layouts)
+Shepherd enables admins to set what levels are available to their users and in what way they are presented (Open, CTF and Tournament Layouts)
 * **Perfect for Classrooms**  
 Shepherd gives its players user specific solution keys to prevent students from sharing keys, rather than going through the steps required to complete a level.
 * **Scoreboard**  

@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -56,17 +55,7 @@ public class Getter
 
 	private static int majorCap = 175;
 
-	private static int admiralCap = 200;
-
-	private static int week8Cap = 220;
-
-	private static int week9Cap = 240;
-
-	private static int week10Cap = 260;
-
-	private static int week11Cap = 280;
-
-	private static int week12Cap = 1000;
+	private static int admiralCap = 999; //everything above Major is Admiral
 
 	/**
 	 * This method hashes the user submitted password and sends it to the database.
@@ -405,31 +394,6 @@ public class Getter
 		return result;
 	}
 
-	/**
-	 * @param ApplicationRoot The current running context of the application
-	 * @return Result set containing assigned week numbers, in order
-	 */
-	public static ResultSet getWeekInfo(String ApplicationRoot)
-	{
-		ResultSet result = null;
-		log.debug("*** Getter.getWeekInfo (All Classes) ***");
-		Connection conn = Database.getCoreConnection(ApplicationRoot);
-		try
-		{
-			PreparedStatement ps = conn.prepareStatement("select distinct week from modules where week is not null order by week asc");
-			log.debug("Gathering week numbers ResultSet");
-			result = ps.executeQuery();
-			log.debug("Returning Result Set from week numbers query");
-		}
-		catch (SQLException e)
-		{
-			log.error("Could not execute query: " + e.toString());
-			result = null;
-		}
-		log.debug("*** END getWeekInfo");
-		return result;
-	}	
-	
 	/**
 	 * @param ApplicationRoot The current running context of the application
 	 * @param classId The identifier of the class
@@ -1576,10 +1540,9 @@ public class Getter
 	 * Used to present the progress of a class in a series of loading bars
 	 * @param applicationRoot The current running context of the application
 	 * @param classId The identifier of the class to use in lookup
-	 * @param weekId The week ID to filter by
 	 * @return A HTML representation of a class's progress in the application
 	 */
-	public static String getProgress(String applicationRoot, String classId, Integer weekId)
+	public static String getProgress(String applicationRoot, String classId)
 	{
 		log.debug("*** Getter.getProgress ***");
 
@@ -1588,57 +1551,31 @@ public class Getter
 		Connection conn = Database.getCoreConnection(applicationRoot);
 		try
 		{
-			if (weekId == null) {
-				log.debug("Preparing userProgress call");
-				CallableStatement callstmnt = conn.prepareCall("call userProgress(?)");
-				callstmnt.setString(1, classId);
-				log.debug("Executing userProgress");
-				ResultSet resultSet = callstmnt.executeQuery();
-				int resultAmount = 0;
-				while(resultSet.next()) //For each user in a class
+			log.debug("Preparing userProgress call");
+			CallableStatement callstmnt = conn.prepareCall("call userProgress(?)");
+			callstmnt.setString(1, classId);
+			log.debug("Executing userProgress");
+			ResultSet resultSet = callstmnt.executeQuery();
+			int resultAmount = 0;
+			while(resultSet.next()) //For each user in a class
+			{
+				resultAmount++;
+				if(resultSet.getString(1) != null)
 				{
-					resultAmount++;
-					if(resultSet.getString(1) != null)
-					{
-						result += "<tr><td>" + encoder.encodeForHTML(resultSet.getString(1)) + //Output their progress
-							"</td><td><div style='background-color: #A878EF; heigth: 25px; width: " + widthOfUnitBar*resultSet.getInt(2) + "px;'>" +
-									"<font color='white'><strong>" +
-									resultSet.getInt(2);
-						if(resultSet.getInt(2) > 6)
-							result += " Modules";
-						result += "</strong></font></div></td></tr>";
-					}
+					result += "<tr><td>" + encoder.encodeForHTML(resultSet.getString(1)) + //Output their progress
+						"</td><td><div style='background-color: #A878EF; heigth: 25px; width: " + widthOfUnitBar*resultSet.getInt(2) + "px;'>" +
+								"<font color='white'><strong>" +
+								resultSet.getInt(2);
+					if(resultSet.getInt(2) > 6)
+						result += " Modules";
+					result += "</strong></font></div></td></tr>";
 				}
-				if(resultAmount > 0)
-					result = "<table><tr><th>Player</th><th>Progress</th></tr>" +
-							 result + "</table>";
-				else
-					result = new String();
-			} else {
-				log.debug("Preparing userProgressWeekly call");
-				CallableStatement callstmnt = conn.prepareCall("call userProgressWeekly(?,?)");
-				callstmnt.setString(1, classId);
-				callstmnt.setInt(2, weekId);
-				log.debug("Executing userProgressWeekly");
-				ResultSet resultSet = callstmnt.executeQuery();
-				int resultAmount = 0;
-				while(resultSet.next()) //For each user in a class
-				{
-					resultAmount++;
-					if(resultSet.getString(1) != null)
-					{
-						result += "<tr><td>" + encoder.encodeForHTML(resultSet.getString(1)) + "</td>" +
-							"<td>" + encoder.encodeForHTML(resultSet.getString(2)) + "</td>" +
-							"<td>" + resultSet.getString(3) + " Module(s)</td></tr>";
-					}
-				}
-				if(resultAmount > 0)
-					result = "<table><tr><th>Player</th><th>Email</th><th>Completed</th></tr>" +
-							 result + "</table>";
-				else
-					result = new String();
-				
 			}
+			if(resultAmount > 0)
+				result = "<table><tr><th>Player</th><th>Progress</th></tr>" +
+						 result + "</table>";
+			else
+				result = new String();
 		}
 		catch(SQLException e)
 		{
@@ -1722,18 +1659,8 @@ public class Getter
 			return 6;
 		else if (rankNumber < admiralCap)
 			return 7;
-		else if (rankNumber < week8Cap)
-			return 8;
-		else if (rankNumber < week9Cap)
-			return 9;
-		else if (rankNumber < week10Cap)
-			return 10;
-		else if (rankNumber < week11Cap)
-			return 11;
-		else if (rankNumber < week12Cap)
-			return 12;
 		else
-			return 12; //Max level is 12.
+			return 7; //Max level is 7.
 	}
 	/**
 	 * This method prepares the Tournament module menu. This is when Security Shepherd is in "Tournament Mode".
@@ -1757,21 +1684,19 @@ public class Getter
 
 			String listEntry = new String();
 			//Get the modules
-			//CallableStatement callstmt = conn.prepareCall("call moduleTournamentOpenInfo(?)");
-			//callstmt.setString(1, userId);
+			CallableStatement callstmt = conn.prepareCall("call moduleTournamentOpenInfo(?)");
+			callstmt.setString(1, userId);
 			log.debug("Gathering moduleTournamentOpenInfo ResultSet for user " + userId);
-			//ResultSet levels = callstmt.executeQuery();
+			ResultSet levels = callstmt.executeQuery();
 			log.debug("Opening Result Set from moduleTournamentOpenInfo");
-			List<Module> modules = Module.getModules(conn, userId);
-			int currentSection = -1; // Used to identify the first row, as it is slightly different to all other rows for output
-			//while(levels.next())
-			for (Module module : modules)
+			int currentSection = 0; // Used to identify the first row, as it is slightly different to all other rows for output
+			while(levels.next())
 			{
 				//Create Row Entry First
 				//log.debug("Adding " + lessons.getString(1));
 				listEntry = "<li>";
 				//Markers for completion
-				if(module.finishTime != null)
+				if(levels.getString(4) != null)
 				{
 					listEntry += "<img src='css/images/completed.png'/>";
 				}
@@ -1781,33 +1706,26 @@ public class Getter
 				}
 				//Prepare entry output
 				listEntry += "<a class='lesson' id='"
-					+ encoder.encodeForHTMLAttribute(module.moduleId)
+					+ encoder.encodeForHTMLAttribute(levels.getString(3))
 					+ "' href='javascript:;'>"
-					+ encoder.encodeForHTML(levelNames.getString(module.moduleNameLangPointer))
+					+ encoder.encodeForHTML(levelNames.getString(levels.getString(1)))
 					+ "</a>\n";
 				listEntry += "</li>";
 				//What section does this belong in? Current or Next?
-				//if (getTounnamentSectionFromRankNumber(levels.getInt(5)) > currentSection)
-				if (module.week > currentSection)
+				if (getTounnamentSectionFromRankNumber(levels.getInt(5)) > currentSection)
 				{
 					//This level is not in the same level band as the previous level. So a new Level Band Header is required on the master list before we add the entry.
 					//Do we need to close a previous list?
-					if(currentSection != -1) //If a Section Select hasn't been made before, we don't need to close any previous sections
+					if(currentSection != 0) //If a Section Select hasn't been made before, we don't need to close any previous sections
 					{
 						//We've had a section before, so need to close the previous one before we make this new one
 						levelMasterList += "</ul>\n";
 					}
 					//Update the current section to the one we have just added to the list
-					//currentSection = getTounnamentSectionFromRankNumber(levels.getInt(5));
-					currentSection = module.week;
+					currentSection = getTounnamentSectionFromRankNumber(levels.getInt(5));
 					//Which to Add?
 					switch(currentSection)
 					{
-						case 0: //prework
-							//log.debug("Starting Field Training List");
-							levelMasterList += "<a id=\"preworkList\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.0") + "</div></a>"
-								+ "<ul id=\"thePreworkList\" style=\"display: none;\" class='levelList'>\n";
-							break;
 						case 1: //fieldTraining
 							//log.debug("Starting Field Training List");
 							levelMasterList += "<a id=\"fieldTrainingList\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.1") + "</div></a>"
@@ -1842,26 +1760,6 @@ public class Getter
 							//log.debug("Starting Admiral List");
 							levelMasterList += "<a id=\"admiralList\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.7") + "</div></a>"
 								+ "<ul id=\"theAdmiralList\" style=\"display: none;\" class='levelList'>\n";
-							break;
-						case 8: // Week 8
-							levelMasterList += "<a id=\"week8List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.8") + "</div></a>"
-								+ "<ul id=\"theWeek8List\" style=\"display: none;\" class='levelList'>\n";
-							break;
-						case 9: // Week 9
-							levelMasterList += "<a id=\"week9List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.9") + "</div></a>"
-								+ "<ul id=\"theWeek9List\" style=\"display: none;\" class='levelList'>\n";
-							break;
-						case 10: // Week 10
-							levelMasterList += "<a id=\"week10List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.10") + "</div></a>"
-								+ "<ul id=\"theWeek10List\" style=\"display: none;\" class='levelList'>\n";
-							break;
-						case 11: // Week 11
-							levelMasterList += "<a id=\"week11List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.11") + "</div></a>"
-								+ "<ul id=\"theWeek11List\" style=\"display: none;\" class='levelList'>\n";
-							break;
-						case 12: // Week 12
-							levelMasterList += "<a id=\"week12List\" href=\"javascript:;\"><div class=\"menuButton\">" + bundle.getString("getter.tournamentRank.12") + "</div></a>"
-								+ "<ul id=\"theWeek12List\" style=\"display: none;\" class='levelList'>\n";
 							break;
 					}
 				}
@@ -2018,5 +1916,16 @@ public class Getter
 		Database.closeConnection(conn);
 		log.debug("*** END isCsrfLevelComplete ***");
 		return result;
+	}
+
+	public static String returnMobileKey(String applicationRoot, String p_apiKey) {
+		// TODO Auto-generated method stub
+
+		if (p_apiKey == "d73959d5dd1dda7ccf675f7f883d6acb6737d5fb")
+		{
+			return "TESTKEY";
+		}
+		else
+			return "Invalid API Key";
 	}
 }
