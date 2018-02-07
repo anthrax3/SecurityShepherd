@@ -43,6 +43,7 @@ public class GetProgress extends HttpServlet
 	/**
 	 * Used to return an administrator with the current progress of each player in a class
 	 * @param classId
+	 * @param weekId
 	 * @param csrfToken
 	 */
 	public void doPost (HttpServletRequest request, HttpServletResponse response) 
@@ -63,8 +64,10 @@ public class GetProgress extends HttpServlet
 			{
 				String classId = Validate.validateParameter(request.getParameter("classId"), 64);
 				log.debug("classId: " + classId);
+				String weekId = Validate.validateParameter(request.getParameter("weekId"), 64);
+				log.debug("weekId: " + weekId);
 				String ApplicationRoot = getServletContext().getRealPath("");
-				String htmlOutput = Getter.getProgress(ApplicationRoot, classId);
+				String htmlOutput = Getter.getProgress(ApplicationRoot, classId, Integer.parseInt(weekId.trim()));
 				if(htmlOutput.isEmpty())
 					htmlOutput = "No Progress Found for that class!";
 				out.write(htmlOutput);

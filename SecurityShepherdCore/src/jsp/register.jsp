@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" import="utils.*,org.owasp.esapi.ESAPI, org.owasp.esapi.Encoder" errorPage="" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" import="utils.*,org.owasp.esapi.ESAPI, org.owasp.esapi.Encoder, java.sql.*, dbProcs.Getter" errorPage="" %>
 <%@ include file="translation.jsp" %>
 <%
 	ShepherdLogManager.logEvent(request.getRemoteAddr(), request.getHeader("X-Forwarded-For"), "DEBUG: register.jsp *************************");
@@ -50,6 +50,21 @@ else
 {
 	response.sendRedirect("register.jsp");
 }
+
+String ApplicationRoot = getServletContext().getRealPath("");
+boolean showClasses = false;
+
+ResultSet classList = Getter.getClassInfo(ApplicationRoot);
+try
+{
+	showClasses = classList.next();
+}
+catch(SQLException e)
+{
+	ShepherdLogManager.logEvent(request.getRemoteAddr(), request.getHeader("X-Forwarded-For"), "Could not open classList: " + e.toString());
+	showClasses = false;
+}
+
 //This encoder should escape all output to prevent XSS attacks. This should be performed everywhere for safety
 Encoder encoder = ESAPI.encoder();
 String csrfToken = encoder.encodeForHTML(Hash.randomString());
@@ -115,6 +130,39 @@ if(ses.getAttribute("errorMessage") != null)
 					<tr><td><p><fmt:message key="generic.text.confirmPasswd" /><font color="red"><small>* </small></font>:</p></td><td><input type="password" id="passWordConfirm" autocomplete="OFF" /></td></tr>
 					<tr><td><p><fmt:message key="generic.text.emailAddr" />:</p></td><td><input type="text" id="userAddress" value="<%=userAddress%>"/></td></tr>
 					<tr><td><p><fmt:message key="generic.text.confirmEmailAddr" />:</p></td><td><input type="text" id="userAddressCnf" /></td></tr>
+					<tr>
+						<td>
+							<p>Class:</p>
+						</td>
+						<td>
+							<select id="classId">
+								<%
+									if(showClasses)
+									{
+										try
+										{
+											do
+											{
+												String classId = encoder.encodeForHTML(classList.getString(1));
+												String classYearName = encoder.encodeForHTML(classList.getString(3)) + " " + encoder.encodeForHTML(classList.getString(2));
+												%>
+													<option value="<%=classId%>"><%=classYearName%></option>
+												<%
+											}
+											while(classList.next());
+										}
+										catch(SQLException e)
+										{
+											ShepherdLogManager.logEvent(request.getRemoteAddr(), request.getHeader("X-Forwarded-For"), "Error occured when manipulating classList: " + e.toString());
+											showClasses = false;
+										}
+									}
+								%>
+								<option value="" id="nullClassOption">Unknown</option>
+							</select>
+						</td>
+					</tr>
+
 				</table>
 				
 				<br/>
@@ -174,6 +222,7 @@ if(ses.getAttribute("errorMessage") != null)
 		var thePassAgain = $("#passWordConfirm").val();
 		var theEmail = $("#userAddress").val();
 		var theEmailAgain = $("#userAddressCnf").val();
+		var theClass = $("#classId").val();
 		//Validation
 		var theError = "";
 		if (theName.length == 0 || thePass.length == 0 || thePassAgain.length == 0)
@@ -226,6 +275,7 @@ if(ses.getAttribute("errorMessage") != null)
 						passWordConfirm: thePassAgain,
 						userAddress: theEmail,
 						userAddressCnf: theEmailAgain,
+						classId: theClass,
 						csrfToken: "<%=csrfToken%>"
 					},
 					async: false

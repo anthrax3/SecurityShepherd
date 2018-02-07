@@ -7,13 +7,13 @@ package utils;
  */
 public class ScoreboardStatus
 {
-	private static boolean scoreboardEnabled = true;
+	private static boolean scoreboardEnabled = false;
 	private static String scoreboardClass = new String();
-	private static boolean adminOnlyScoreboard = false;
+	private static boolean adminOnlyScoreboard = true;
 	private static boolean classSpecificScoreboard = false;
-	
+
 	/**
-	 * Returns if user is authorised to see scoreboard currenly. 
+	 * Returns if user is authorised to see scoreboard currenly.
 	 * @param userRole Must be player or admin
 	 * @return
 	 */
@@ -24,7 +24,7 @@ public class ScoreboardStatus
 			authorised = userRole.equalsIgnoreCase("admin");
 		return authorised && scoreboardEnabled;
 	}
-	
+
 	/**
 	 * Disables scoreboard functions
 	 */
@@ -35,7 +35,7 @@ public class ScoreboardStatus
 		scoreboardClass = new String();
 		classSpecificScoreboard = false;
 	}
-	
+
 	/**
 	 * Used to tell if the current scoreboard config is set to Class Specific
 	 * @return Boolean Value
@@ -44,21 +44,21 @@ public class ScoreboardStatus
 	{
 		return classSpecificScoreboard;
 	}
-	
+
 	public static String getScoreboardClass()
 	{
 		return scoreboardClass;
 	}
-	
+
 	/**
 	 * Is the scoreboard configured to be displayed?
-	 * @return 
+	 * @return
 	 */
 	public static boolean isScoreboardEnabled()
 	{
 		return scoreboardEnabled;
 	}
-	
+
 	/**
 	 * Sets the scoreboard to be admin only
 	 */
@@ -66,7 +66,7 @@ public class ScoreboardStatus
 	{
 		adminOnlyScoreboard = true;
 	}
-	
+
 	/**
 	 * Enables public Scoreboard based on scores from specific class
 	 * @param theClass Class to base the Scoreboard on
@@ -78,7 +78,7 @@ public class ScoreboardStatus
 		adminOnlyScoreboard = false;
 		classSpecificScoreboard = false;
 	}
-	
+
 	/**
 	 * Sets the scoreboard to show users the score from their class only
 	 */
@@ -89,7 +89,7 @@ public class ScoreboardStatus
 		adminOnlyScoreboard = false;
 		classSpecificScoreboard = true;
 	}
-	
+
 	/**
 	 * Method to know if user is running a class specific scoreboard or not
 	 * @return True if class specific scoreboard is enabled. Otherwise False
@@ -98,7 +98,7 @@ public class ScoreboardStatus
 	{
 		return classSpecificScoreboard;
 	}
-	
+
 	/**
 	 * Sets scoreboard to list all players regardless of class
 	 */

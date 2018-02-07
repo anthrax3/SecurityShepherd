@@ -3,23 +3,23 @@
 <%
 /**
  * This file is part of the Security Shepherd Project.
- * 
+ *
  * The Security Shepherd project is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.<br/>
- * 
+ *
  * The Security Shepherd project is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.<br/>
- * 
+ *
  * You should have received a copy of the GNU General Public License
- * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>. 
- * 
+ * along with the Security Shepherd project.  If not, see <http://www.gnu.org/licenses/>.
+ *
  * @author Mark Denihan
  */
- 
+
 if (request.getSession() != null)
 {
 HttpSession ses = request.getSession();
@@ -92,18 +92,17 @@ if(!changePassword)
 			<div id="scopeLoadingDiv" style="display: none;"><fmt:message key="generic.text.loading" /></div>
 			</p>
 			<% } %>
-			<fmt:message key="getStarted.text.checkShepConfigMsg" /></a>.
 		</div>
 		<br/>
 	<div id="cantSee">
-		
+
 	</div>
 	</div>
 	</div>
 	<script>
 	var theCsrfToken = "<%= csrfToken %>";
 	var theRefreshError = "Could not Refresh Menu";
-	
+
 	$('#getStarted').slideDown("slow");
 	$('#cantSee').html("<iframe class='levelIframe' frameborder='no' id='theStart' src='readyToPlay.jsp?ThreadSequenceId=<%=encoder.encodeForHTMLAttribute(encoder.encodeForURL(threadId))%>'></iframe>");
 	$('#cantSee').html(function(){
@@ -142,7 +141,7 @@ if(!changePassword)
 			$("html, body").animate({ scrollTop: 0 }, "fast");
 		});
 	});
-	
+
 	$("#onlyWebApplication").click(function(){
 		$("#scopeResultsDiv").slideUp("slow");
 		$("#scopeLoadingDiv").show("slow");
@@ -173,7 +172,7 @@ if(!changePassword)
 			$("html, body").animate({ scrollTop: 0 }, "fast");
 		});
 	});
-	
+
 	$("#onlyMobileApplication").click(function(){
 		$("#scopeResultsDiv").slideUp("slow");
 		$("#scopeLoadingDiv").show("slow");
@@ -204,7 +203,7 @@ if(!changePassword)
 			$("html, body").animate({ scrollTop: 0 }, "fast");
 		});
 	});
-	
+
 	$("#noApplication").click(function(){
 		$("#scopeResultsDiv").slideUp("slow");
 		$("#scopeLoadingDiv").show("slow");

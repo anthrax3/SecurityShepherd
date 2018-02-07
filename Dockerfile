@@ -13,7 +13,7 @@ MAINTAINER Paul <@ismisepaul>
 
 #Change these Passwords
 ENV keystorePwd=CowSaysMoo mysqlRootPwd=CowSaysMoo
- 
+
 #Other Environment Variables
 ENV homeDirectory="/home/shepherd/" keyStoreFileName="shepherdKeystore.jks"
 
@@ -23,10 +23,10 @@ ENV serverXml="https://raw.githubusercontent.com/OWASP/SecurityShepherd/master/S
 # Install Pre-Requisite Stuff
 RUN apt-get update -y &&\
 	apt-get install -y software-properties-common python-software-properties &&\
-	add-apt-repository -y ppa:webupd8team/java &&\ 
+	add-apt-repository -y ppa:webupd8team/java &&\
 	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 &&\
 	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list &&\
-	apt-get update -y &&\ 
+	apt-get update -y &&\
 	apt-get install -y mongodb-org=2.6.9 mongodb-org-server=2.6.9 mongodb-org-shell=2.6.9 mongodb-org-mongos=2.6.9 mongodb-org-tools=2.6.9 &&\
 	echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections &&\
 	apt-get install -y oracle-java7-installer --force-yes &&\
@@ -58,7 +58,7 @@ RUN /bin/bash -c "/usr/bin/mysqld_safe &" &&\
 	chown `id -u` /data/db &&\
 	/bin/bash -c "/usr/bin/mongod &" &&\
 	sleep 10 &&\
-	mongo shepherdGames mongoSchema.js &&\ 
+	mongo shepherdGames mongoSchema.js &&\
 	sleep 15
 
 #Configuring Tomcat

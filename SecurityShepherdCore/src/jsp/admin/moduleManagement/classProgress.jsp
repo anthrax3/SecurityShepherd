@@ -60,13 +60,24 @@ catch(SQLException e)
 	ShepherdLogManager.logEvent(request.getRemoteAddr(), request.getHeader("X-Forwarded-For"), "Could not open classList: " + e.toString());
 	showClasses = false;
 }
+ResultSet weekList = Getter.getWeekInfo(ApplicationRoot);
+boolean showWeeks = true;
+try
+{
+	showWeeks = weekList.next();
+}
+catch(SQLException e)
+{
+	ShepherdLogManager.logEvent(request.getRemoteAddr(), request.getHeader("X-Forwarded-For"), "Could not open weekList: " + e.toString());
+	showWeeks = false;
+}
 %>
 	<div id="formDiv" class="post">
 		<h1 class="title">Get Progress</h1>
 		<div class="entry">
 			<div id="badData"></div>
 			<form id="theForm" action="javascript:;">
-					<p>Select the class you would like to see the progress of</p>
+					<p>Select the class and week you would like to see the progress of</p>
 					<div id="badData"></div>
 					<input type="hidden" id="csrfToken" value="<%=csrfToken%>"/>
 					<table align="center">
@@ -99,6 +110,35 @@ catch(SQLException e)
 							</select>
 							</td>
 						</tr>
+						<tr>
+							<td>
+							<select id="weekId">
+								<option value=""></option>
+								<%
+									if(showWeeks)
+														{
+															try
+															{
+																do
+																{
+																	String weekId = encoder.encodeForHTMLAttribute(String.valueOf(weekList.getInt(1)));
+																	
+								%>
+												<option value="<%=weekId%>">Week <%=weekId%></option>
+											<%
+												}
+																			while(weekList.next());
+																		}
+																		catch(SQLException e)
+																		{
+																			ShepherdLogManager.logEvent(request.getRemoteAddr(), request.getHeader("X-Forwarded-For"), "Error occured when manipulating weekList: " + e.toString());
+																			showWeeks = false;
+																		}
+																	}
+											%>
+							</select>
+							</td>
+						</tr>
 						<tr><td align="center">
 							<div id="submitButton"><input type="submit" value="Get Progress"/></div>
 							<div id="loadingSign" style="display: none;"><p>Loading...</p></div> 
@@ -111,6 +151,7 @@ catch(SQLException e)
 					$("#theForm").submit(function(){
 						var theCsrfToken = $('#csrfToken').val();
 						var theClass = $("#classId").val();
+						var theWeek = $("#weekId").val();
 						//The Ajax Operation
 						$("#badData").hide("fast");
 						$("#loadingSign").show("slow");
@@ -121,6 +162,7 @@ catch(SQLException e)
 								url: "getProgress",
 								data: {
 									classId: theClass,
+									weekId: theWeek,
 									csrfToken: theCsrfToken
 								},
 								async: false

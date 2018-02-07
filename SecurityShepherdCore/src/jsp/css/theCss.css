@@ -52,7 +52,7 @@ a:hover {
 
 #header {
 	width: 757px;
-	height: 240px;
+	height: 250px;
 	margin: 0 auto;
 	background: url(images/shepherdAndSheep.jpg) no-repeat right top;
 }
@@ -151,8 +151,8 @@ a:hover {
 	width: 100%;
 }
 
-#searchResults li { 
-	cursor: pointer; 
+#searchResults li {
+	cursor: pointer;
 	cursor: hand;
 	border-bottom: 1px solid #d4d4d4;
     padding-left: 5px;
@@ -199,7 +199,7 @@ a:hover {
 	vertical-align: middle;
 	margin-bottom: 5px;
    }
-   
+
 .menuButton:hover {
    border-top-color: #CC99FF;
    background: #BFBFBF;
@@ -208,7 +208,7 @@ a:hover {
    border-top-color: #8660BF;
    background: #8660BF;
    }
-   
+
    .scoreBar {
 	background-color: #965BED;
 	height: 30px;
@@ -259,13 +259,13 @@ a:hover {
 }
 
 .place{
-	display: inline; 
+	display: inline;
 	color: #000000;
 	min-width:25px;
 }
 
 .scoreNumber{
-	display: inline; 
+	display: inline;
 	float: right;
 	padding-right: 5px;
 	padding-top: 2px;
@@ -323,21 +323,21 @@ a:hover {
 }
 
 .informationBox {
-	display: block; 
-	margin 0; 
-	border-color:#A878EF; 
-	border-style:dashed; 
-	background-color: #D4D4D4; 
-	padding-top:5px; 
-	padding-bottom:5px; 
-	padding-right:5px; 
+	display: block;
+	margin 0;
+	border-color:#A878EF;
+	border-style:dashed;
+	background-color: #D4D4D4;
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-right:5px;
 	padding-left:5px;
 	margin-bottom: 5px;
 }
 
 .cheatBox {
-	float: right; 
-	margin 0; 
+	float: right;
+	margin 0;
 	width: 685px;
 	border-color:#A878EF;
 	border-style:dashed;
@@ -376,8 +376,8 @@ a:hover {
 }
 
 #submitResult{
-	display: none; 
-	float: right; 
+	display: none;
+	float: right;
 }
 
 .levelIframe{
@@ -387,7 +387,7 @@ a:hover {
 }
 
 .levelList{
-	max-height: 230px; 
+	max-height: 230px;
 }
 
 .tooltipped {
